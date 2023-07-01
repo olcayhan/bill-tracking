@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const HTTP = axios.create({
-  baseURL: "http://localhost:5000",
-  // baseURL: "https://fatura-takip-backend.onrender.com",
+  baseURL: "https://fatura-takip-backend.onrender.com",
 });
 
 /* ========================= Student ===================== */

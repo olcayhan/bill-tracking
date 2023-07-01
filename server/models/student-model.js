@@ -1,47 +1,48 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const studentSchema = new Schema({
-
+const studentSchema = new Schema(
+  {
     date: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     name: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 2,
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
     },
 
     surname: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 2,
-        maxlenght: 20
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxlenght: 20,
     },
     phone: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     courses: {
-        type: Array
+      type: Array,
     },
     billID: {
-        type: String,
-        required: true
-    }
-
-}, { collection: "students" });
+      type: String,
+      required: true,
+    },
+  },
+  { collection: "students" }
+);
 
 const Student = mongoose.model("Student", studentSchema);
 

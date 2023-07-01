@@ -43,7 +43,6 @@ export default function AdminStudentList() {
         <div className="studentTable table-responsive rounded p-5">
           <Stack direction="horizontal" gap={3}>
             <div>
-              {" "}
               <i className="fa-solid fa-magnifying-glass fa-2x text-primary"></i>
             </div>
             <Form.Control

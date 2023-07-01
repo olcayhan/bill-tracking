@@ -1,25 +1,23 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const courseSchema = new Schema({
+const courseSchema = new Schema(
+  {
     courseName: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     localDate: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     date: {
-        type: Date,
-        required: true,
+      type: Date,
+      required: true,
     },
-    adminID: {
-        type: String,
-        required: true
-    }
-
-}, { collection: "course" });
+  },
+  { collection: "course" }
+);
 
 const Course = mongoose.model("Course", courseSchema);
 

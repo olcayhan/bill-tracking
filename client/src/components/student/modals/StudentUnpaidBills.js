@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { useClass } from "../../../contexts/ClassContext";
-import { useParams } from "react-router-dom";
+
 
 export default function StudentUnpaidBills({ show, handleClose, student }) {
   const { getBillsByID } = useClass();

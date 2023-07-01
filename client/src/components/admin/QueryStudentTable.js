@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import ShowBillModal from "./modals/ShowBillModal";
-import ShowStudentModal from "./modals/ShowStudentModal";
-import { useClass } from "../../contexts/ClassContext";
 
 export default function QueryStudentTable({ student, index }) {
-  const [isShowStudent, setIsShowStudent] = useState();
   const [isShowBill, setIsShowBill] = useState();
   const [viewStudent, setViewStudent] = useState();
 
@@ -23,21 +20,18 @@ export default function QueryStudentTable({ student, index }) {
               setIsShowBill(true);
             }}
           >
-            {" "}
             <i className="fas fa-duotone fa-receipt fa-2x text-light"></i>{" "}
           </button>
         </td>
 
         <td>
-          <button
+          <a
             className="btn btn-warning font-weight-bold px-3"
-            onClick={() => {
-              setViewStudent(student);
-              setIsShowStudent(true);
-            }}
+            href={`student/${student._id}`}
+            onClick={() => {}}
           >
             <i className="fa-sharp fa-solid fa-circle-info fa-2x text-light"></i>
-          </button>
+          </a>
         </td>
       </tr>
 
@@ -45,12 +39,6 @@ export default function QueryStudentTable({ student, index }) {
         show={isShowBill}
         student={viewStudent}
         handleClose={() => setIsShowBill(false)}
-      />
-
-      <ShowStudentModal
-        show={isShowStudent}
-        studentID={viewStudent?._id}
-        handleClose={() => setIsShowStudent(false)}
       />
     </>
   );

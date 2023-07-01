@@ -6,10 +6,8 @@ import {
   togglePaid,
   addBilltoDB,
   getBillstoDB,
-  validUser,
   addAnnouncestoDB,
   getAnnouncestoDB,
-  validAdmin,
   deleteAnnouncestoDB,
   addCoursetoDB,
   getCoursetoDB,
@@ -29,15 +27,11 @@ export const ClassProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    updateFunction();
-  }, []);
-
-  const updateFunction = () => {
     getAllStudents();
     getBills();
     getAnnounces();
     getCourses();
-  };
+  }, []);
 
   function getAllStudents() {
     getAllStudent()
@@ -51,13 +45,13 @@ export const ClassProvider = ({ children }) => {
 
   function addStudent(student) {
     addNewStudent(student)
-      .then((res) => updateFunction())
+      .then((res) => getAllStudents())
       .catch((err) => console.log(err));
   }
 
   function deleteStudentById(id) {
     deleteStudent(id)
-      .then((response) => updateFunction())
+      .then((response) => getAllStudents())
       .catch((e) => console.log(e));
   }
 
@@ -74,7 +68,7 @@ export const ClassProvider = ({ children }) => {
   function payBill(id) {
     togglePaid(id)
       .then((res) => {
-        updateFunction();
+        getBills();
       })
       .catch((err) => {
         console.log(err);
@@ -84,7 +78,7 @@ export const ClassProvider = ({ children }) => {
   function addBill(data) {
     addBilltoDB(data)
       .then((res) => {
-        updateFunction();
+        getBills();
       })
       .catch((err) => {
         console.log(err);
@@ -107,31 +101,10 @@ export const ClassProvider = ({ children }) => {
     });
   }
 
-  function loginUser(studentLogin) {
-    validUser(studentLogin)
-      .then((res) => {
-        localStorage.setItem("user", res.data.student._id);
-        window.location.pathname = "/student";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function loginAdmin(adminLogin) {
-    validAdmin(adminLogin)
-      .then((res) => {
-        window.location.pathname = "/admin";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   function addAnnounces(data) {
     addAnnouncestoDB(data)
       .then((res) => {
-        updateFunction();
+        getAnnounces();
       })
       .catch((err) => {
         console.log(err);
@@ -151,7 +124,7 @@ export const ClassProvider = ({ children }) => {
   function deleteAnnounces(data) {
     deleteAnnouncestoDB(data)
       .then((res) => {
-        updateFunction();
+        getAnnounces();
       })
       .catch((err) => {
         console.log(err);
@@ -162,8 +135,7 @@ export const ClassProvider = ({ children }) => {
   function addCourses(data) {
     addCoursetoDB({ ...data, adminID: localStorage.getItem("adminID") })
       .then((res) => {
-        console.log(res);
-        updateFunction();
+        getCourses();
       })
       .catch((err) => {
         console.log(err);
@@ -183,7 +155,8 @@ export const ClassProvider = ({ children }) => {
   function deleteCourse(data) {
     deleteCoursetoDB(data)
       .then((res) => {
-        updateFunction();
+        getCourses();
+        getAllStudents();
       })
       .catch((err) => {
         console.log(err);
@@ -199,8 +172,6 @@ export const ClassProvider = ({ children }) => {
         payBill,
         addBill,
         getBillsByID,
-        loginUser,
-        loginAdmin,
         addAnnounces,
         deleteAnnounces,
         addCourses,

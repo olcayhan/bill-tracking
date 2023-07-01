@@ -1,18 +1,9 @@
 import axios from "axios";
 
 const HTTP = axios.create({
-  baseURL: "https://fatura-takip-backend.onrender.com",
+  baseURL: "http://localhost:5000",
+  // baseURL: "https://fatura-takip-backend.onrender.com",
 });
-
-/* ========================= Login ===================== */
-
-export async function validUser(studentData) {
-  return await HTTP.post("/student/login", studentData);
-}
-
-export async function validAdmin(adminData) {
-  return await HTTP.post("/admin/login", adminData);
-}
 
 /* ========================= Student ===================== */
 export async function addNewStudent(studentData) {

@@ -12,7 +12,6 @@ router.post("/add", async (req, res) => {
             courseName: req.body.courseName,
             date: req.body.date,
             localDate: req.body.localDate,
-            adminID: req.body.adminID
         });
 
         await newCourse.save();

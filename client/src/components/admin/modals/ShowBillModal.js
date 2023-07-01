@@ -1,22 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Modal, Stack } from "react-bootstrap";
 import { useClass } from "../../../contexts/ClassContext";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { toast } from "react-hot-toast";
+import Spinner from "../../Spinner";
 
 export default function ShowBillModal({ show, student, handleClose }) {
   const { payBill, getBillsByID } = useClass();
   const bills = getBillsByID(student?.billID);
+  const [isLoading, setLoading] = useState(false);
 
   const handlePay = useCallback(
     (item) => {
-      payBill(item);
-      item.isPaid
-        ? toast.error("Fatura Ödemesi Geri Alındı")
-        : toast.success("Fatura Ödendi");
+      setLoading(true);
+      try {
+        payBill(item);
+        item.isPaid
+          ? toast.success("Fatura Ödemesi Geri Alındı")
+          : toast.success("Fatura Ödendi");
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
     },
-    [payBill]
+    [payBill, isLoading]
   );
+
+  console.log(isLoading);
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -92,7 +107,13 @@ export default function ShowBillModal({ show, student, handleClose }) {
                           : { backgroundColor: "#D21312", border: "none" }
                       }
                     >
-                      {item.isPaid ? "Ödenmiş" : "Öde"}
+                      {isLoading ? (
+                        <Spinner />
+                      ) : item.isPaid ? (
+                        "Ödenmiş"
+                      ) : (
+                        "Öde"
+                      )}
                     </Button>
                   </Stack>
                 );

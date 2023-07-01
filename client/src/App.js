@@ -8,19 +8,24 @@ import { RequireAuth } from "react-auth-kit";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
-    return (
-        <>
-            <Toaster />
-            <BrowserRouter>
-                <Routes>
-                    <Route path={"/"} element={<Navigate replace to="/login" />} />
-                    <Route path={"/login"} element={<Login />} />
-                    <Route path={"/admin"} element={<RequireAuth loginPath="/login">
-                        <Admin />
-                    </RequireAuth>} />
-                    <Route path={"/student/:id"} element={<Student />} />
-                </Routes>
-            </BrowserRouter>
-        </>
-    )
+  return (
+    <>
+      <Toaster />
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<Navigate replace to="/login" />} />
+          <Route path={"/login"} element={<Login />} />
+          <Route
+            path={"/admin"}
+            element={
+              <RequireAuth loginPath="/login">
+                <Admin />
+              </RequireAuth>
+            }
+          />
+          <Route path={"/student/:id"} element={<Student />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }

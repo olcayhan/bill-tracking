@@ -16,7 +16,6 @@ import {
   deleteCoursetoDB,
 } from "../axios";
 
-
 const ClassContext = React.createContext();
 
 export function useClass() {
@@ -24,7 +23,6 @@ export function useClass() {
 }
 
 export const ClassProvider = ({ children }) => {
-
   const [students, setStudents] = useState([]);
   const [bills, setBills] = useState([]);
   const [announces, setAnnounces] = useState([]);
@@ -33,7 +31,7 @@ export const ClassProvider = ({ children }) => {
   useEffect(() => {
     updateFunction();
   }, []);
-  
+
   const updateFunction = () => {
     getAllStudents();
     getBills();
@@ -64,7 +62,9 @@ export const ClassProvider = ({ children }) => {
   }
 
   function getStudents(name) {
-    return students.filter(student => student.courses.some(course => course.class === name))
+    return students.filter((student) =>
+      student.courses.some((course) => course.class === name)
+    );
   }
 
   function getStudent(studentID) {
@@ -160,9 +160,9 @@ export const ClassProvider = ({ children }) => {
   /* Courses  */
 
   function addCourses(data) {
-    addCoursetoDB({ ...data, adminID: localStorage.getItem('adminID') })
+    addCoursetoDB({ ...data, adminID: localStorage.getItem("adminID") })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         updateFunction();
       })
       .catch((err) => {
@@ -209,7 +209,7 @@ export const ClassProvider = ({ children }) => {
         announces,
         students,
         bills,
-        courses
+        courses,
       }}
     >
       {children}

@@ -1,124 +1,178 @@
-import React, { useState } from 'react'
-import { Button, Modal, Form } from 'react-bootstrap'
-import { useClass } from '../../../contexts/ClassContext'
-import Multiselect from 'multiselect-react-dropdown';
+import React, { useState } from "react";
+import { Button, Modal, Form } from "react-bootstrap";
+import { useClass } from "../../../contexts/ClassContext";
+import Multiselect from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePickerForm from '../DatePickerForm';
+import DatePickerForm from "../DatePickerForm";
 import { v4 as uuid } from "uuid";
-import { toast } from 'react-hot-toast';
-
-
+import { toast } from "react-hot-toast";
 
 export default function ShowAddStudentFormModal({ show, handleClose }) {
+  const { addStudent, courses, addBill } = useClass();
+  const [tempCourses, setCourses] = useState([]);
+  const [selectCourse, setSelectCourse] = useState([]);
 
-    const { addStudent, courses, addBill } = useClass()
-    const [tempCourses, setCourses] = useState([])
-    const [selectCourse, setSelectCourse] = useState([])
+  const [student, setStudent] = useState({
+    date: new Date().toLocaleDateString(),
+    name: "",
+    surname: "",
+    phone: "",
+    email: "",
+    password: "",
+    courses: [],
+    billID: uuid(),
+  });
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addStudent(student);
+    selectCourse.map((course) => {
+      let courseID = courses.find(
+        (item) => item.courseName === course.class
+      )._id;
+      let courseStartDate = new Date(course.date);
+      for (let index = 0; index < 12; index++) {
+        courseStartDate.setMonth(courseStartDate.getMonth() + 1);
+        addBill({
+          ...course,
+          courseID: courseID,
+          date: new Date(courseStartDate),
+          localDate: new Date(courseStartDate).toLocaleDateString(),
+        });
+        console.log("Eklendi");
+      }
+    });
 
-    const [student, setStudent] = useState({
-        date: new Date().toLocaleDateString(),
-        name: '',
-        surname: '',
-        phone: '',
-        email: '',
-        password: '',
-        courses: [],
-        billID: uuid(),
-    })
+    setCourses([]);
+    setSelectCourse([]);
+    setStudent({
+      date: new Date().toLocaleDateString(),
+      name: "",
+      surname: "",
+      phone: "",
+      email: "",
+      password: "",
+      courses: [],
+      billID: uuid(),
+    });
+    toast.success("Öğrenci Eklendi");
+    toast.success("Faturalar Eklendi");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        addStudent(student)
-        selectCourse.map((course) => {
-            let courseID = courses.find((item) => item.courseName === course.class)._id
-            let courseStartDate = new Date(course.date);
-            for (let index = 0; index < 12; index++) {
-                courseStartDate.setMonth(courseStartDate.getMonth() + 1);
-                addBill({ ...course, courseID: courseID, date: new Date(courseStartDate), localDate: new Date(courseStartDate).toLocaleDateString() })
-                console.log("Eklendi")
-            }
-        })
+    handleClose();
+  };
 
-        setCourses([])
-        setSelectCourse([])
-        setStudent({
-            date: new Date().toLocaleDateString(),
-            name: '',
-            surname: '',
-            phone: '',
-            email: '',
-            password: '',
-            courses: [],
-            billID: uuid(),
-        })
-        toast.success("Öğrenci Eklendi")
-        toast.success("Faturalar Eklendi")
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton className="bg-secondary">
+        <Modal.Title>Ögrenci Ekle</Modal.Title>
+      </Modal.Header>
 
-        handleClose();
-    }
+      <Modal.Body>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>İsim</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) => setStudent({ ...student, name: e.target.value })}
+              required
+            />
+          </Form.Group>
 
-    return (
-        <Modal show={show} onHide={handleClose} >
-            <Modal.Header closeButton className='bg-secondary'>
-                <Modal.Title>Ögrenci Ekle</Modal.Title>
-            </Modal.Header>
+          <Form.Group className="mb-3" controlId="surname">
+            <Form.Label>Soyisim</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) =>
+                setStudent({ ...student, surname: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
 
+          <Form.Group className="mb-3" controlId="phone">
+            <Form.Label>Telefon</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="0530 000 00 00"
+              onChange={(e) =>
+                setStudent({ ...student, phone: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
 
-            <Modal.Body>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className='mb-3' controlId='name'>
-                        <Form.Label>İsim</Form.Label>
-                        <Form.Control type="text" onChange={(e) => setStudent({ ...student, name: e.target.value })} required />
-                    </Form.Group>
+          <Form.Group className="mb-3" controlId="mail">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              type="mail"
+              placeholder="example@gmail.com"
+              onChange={(e) =>
+                setStudent({ ...student, email: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
 
-                    <Form.Group className='mb-3' controlId='surname'>
-                        <Form.Label>Soyisim</Form.Label>
-                        <Form.Control type="text" onChange={(e) => setStudent({ ...student, surname: e.target.value })} required />
-                    </Form.Group>
+          <Form.Group className="mb-3" controlId="password">
+            <Form.Label>Şifre</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) =>
+                setStudent({ ...student, password: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
 
-                    <Form.Group className='mb-3' controlId='phone'>
-                        <Form.Label>Telefon</Form.Label>
-                        <Form.Control type="text" placeholder='0530 000 00 00' onChange={(e) => setStudent({ ...student, phone: e.target.value })} required />
-                    </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Kurslar</Form.Label>
+            <Multiselect
+              className="text-dark"
+              isObject={false}
+              onSelect={(selectedItem) => {
+                setCourses([...selectedItem]);
+              }}
+              onRemove={(selectedItem) => {
+                setCourses([...selectedItem]);
+                setSelectCourse(
+                  selectCourse.filter((course) =>
+                    selectedItem.includes(course.class)
+                  )
+                );
+              }}
+              options={courses.map((item) => {
+                return item?.courseName;
+              })}
+              placeholder="Kursu Seçiniz"
+            />
+          </Form.Group>
 
-                    <Form.Group className='mb-3' controlId='mail'>
-                        <Form.Label>E-mail</Form.Label>
-                        <Form.Control type="mail" placeholder='example@gmail.com' onChange={(e) => setStudent({ ...student, email: e.target.value })} required />
-                    </Form.Group>
+          {tempCourses?.map((item, key) => {
+            return (
+              <DatePickerForm
+                item={item}
+                count={key}
+                studentID={student.billID}
+                selectCourse={selectCourse}
+                setSelectCourse={setSelectCourse}
+              />
+            );
+          })}
 
-                    <Form.Group className='mb-3' controlId='password'>
-                        <Form.Label>Şifre</Form.Label>
-                        <Form.Control type="text" onChange={(e) => setStudent({ ...student, password: e.target.value })} required />
-                    </Form.Group>
-
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Kurslar</Form.Label>
-                        <Multiselect
-                            className='text-dark'
-                            isObject={false}
-                            onSelect={(selectedItem) => { setCourses([...selectedItem]) }}
-                            onRemove={(selectedItem) => {
-                                setCourses([...selectedItem])
-                                setSelectCourse(selectCourse.filter((course) => selectedItem.includes(course.class)))
-                            }}
-                            options={courses.map((item) => { return item?.courseName })}
-                            placeholder="Kursu Seçiniz"
-                        />
-                    </Form.Group>
-
-                    {
-                        tempCourses?.map((item, key) => {
-                            return (<DatePickerForm item={item} count={key} studentID={student.billID} selectCourse={selectCourse} setSelectCourse={setSelectCourse} />
-                            )
-                        })
-                    }
-
-                    <Form.Group className='d-flex justify-content-end'>
-                        <Button disabled={student.name.length < 2 || student.surname.length < 1} style={{ backgroundColor: "#511281", border: "none" }} type="submit" onClick={() => setStudent({ ...student, courses: [...selectCourse] })}>Öğrenci Ekle</Button>
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-        </Modal >
-    )
+          <Form.Group className="d-flex justify-content-end">
+            <Button
+              disabled={student.name.length < 2 || student.surname.length < 1}
+              style={{ backgroundColor: "#511281", border: "none" }}
+              type="submit"
+              onClick={() =>
+                setStudent({ ...student, courses: [...selectCourse] })
+              }
+            >
+              Öğrenci Ekle
+            </Button>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  );
 }

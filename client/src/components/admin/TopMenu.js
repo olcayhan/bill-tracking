@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ShowAddStudentFormModal from "./modals/ShowAddStudentFormModal";
-import { useClass } from "../../contexts/ClassContext";
-import ShowAddAnnouncementFormModal from "./modals/ShowAddAnnouncementFormModal";
+import React, { useState } from "react";
+import Announcement from "./modals/Announcement";
+import AddStudent from "./modals/AddStudent";
 
-export default function AdminTopMenu() {
-  const [isShowAddStudentForm, setIsShowAddStudentForm] = useState();
-  const [isAnnounceForm, setIsAnnounceForm] = useState();
-  const { students, bills, announces } = useClass();
+export default function TopMenu({ students, bills, announces }) {
+  const [isAddStudent, setIsAddStudent] = useState();
+  const [isAnnounce, setIsAnnounce] = useState();
 
   return (
     <div className="row d-flex justify-content-center align-items-center">
@@ -16,7 +14,7 @@ export default function AdminTopMenu() {
             <div className="row no-gutters align-items-center">
               <div className="col mr-2">
                 <div className=" font-weight-bold text-primary text-uppercase mb-1">
-                  Öğrenciler
+                  Students
                 </div>
                 <div className="fs-2 mb-0 font-weight-bold text-gray-800">
                   {students?.length}
@@ -26,7 +24,7 @@ export default function AdminTopMenu() {
                 <div
                   className="btn btn-primary rounded-4"
                   onClick={(e) => {
-                    setIsShowAddStudentForm(true);
+                    setIsAddStudent(true);
                   }}
                 >
                   <i className="fas fa-user-plus fa-3x text-white-300"></i>
@@ -43,10 +41,10 @@ export default function AdminTopMenu() {
             <div className="row no-gutters align-items-center">
               <div className="col mr-2">
                 <div className=" font-weight-bold text-success text-uppercase mb-1">
-                  Faturalar
+                  Bills
                 </div>
                 <div className="fs-2 mb-0 font-weight-bold text-gray-800">
-                  {bills.length}
+                  {bills?.length}
                 </div>
               </div>
               <div className="col-auto">
@@ -63,7 +61,7 @@ export default function AdminTopMenu() {
             <div className="row no-gutters align-items-center">
               <div className="col mr-2">
                 <div className=" font-weight-bold text-warning text-uppercase mb-1">
-                  Duyurular
+                  Announces
                 </div>
                 <div className="fs-2 mb-0 font-weight-bold text-gray-800">
                   {announces?.length}
@@ -73,7 +71,7 @@ export default function AdminTopMenu() {
                 <div
                   className="btn btn-warning rounded-4"
                   onClick={(e) => {
-                    setIsAnnounceForm(true);
+                    setIsAnnounce(true);
                   }}
                 >
                   <i className="fas fa-bullhorn fa-3x text-light"></i>
@@ -84,14 +82,14 @@ export default function AdminTopMenu() {
         </div>
       </div>
 
-      <ShowAddStudentFormModal
-        show={isShowAddStudentForm}
-        handleClose={() => setIsShowAddStudentForm(false)}
+      <AddStudent
+        show={isAddStudent}
+        handleClose={() => setIsAddStudent(false)}
       />
 
-      <ShowAddAnnouncementFormModal
-        show={isAnnounceForm}
-        handleClose={() => setIsAnnounceForm(false)}
+      <Announcement
+        show={isAnnounce}
+        handleClose={() => setIsAnnounce(false)}
       />
     </div>
   );

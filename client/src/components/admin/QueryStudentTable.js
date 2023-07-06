@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ShowBillModal from "./modals/ShowBillModal";
+import Bill from "./modals/Bill";
 
 export default function QueryStudentTable({ student, index }) {
   const [isShowBill, setIsShowBill] = useState();
@@ -35,7 +35,7 @@ export default function QueryStudentTable({ student, index }) {
         </td>
       </tr>
 
-      <ShowBillModal
+      <Bill
         show={isShowBill}
         student={viewStudent}
         handleClose={() => setIsShowBill(false)}

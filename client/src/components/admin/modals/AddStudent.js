@@ -6,11 +6,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePickerForm from "../DatePickerForm";
 import { v4 as uuid } from "uuid";
 import { toast } from "react-hot-toast";
+import useCourses from "../../../hooks/useCourses";
 
-export default function ShowAddStudentFormModal({ show, handleClose }) {
-  const { addStudent, courses, addBill } = useClass();
+export default function AddStudent({ show, handleClose }) {
+  const { addStudent, addBill } = useClass();
   const [tempCourses, setCourses] = useState([]);
   const [selectCourse, setSelectCourse] = useState([]);
+  const { data: courses } = useCourses();
 
   const [student, setStudent] = useState({
     date: new Date().toLocaleDateString(),
@@ -26,8 +28,8 @@ export default function ShowAddStudentFormModal({ show, handleClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     addStudent(student);
-    selectCourse.map((course) => {
-      let courseID = courses.find(
+    selectCourse?.map((course) => {
+      let courseID = courses?.find(
         (item) => item.courseName === course.class
       )._id;
       let courseStartDate = new Date(course.date);
@@ -140,7 +142,7 @@ export default function ShowAddStudentFormModal({ show, handleClose }) {
                   )
                 );
               }}
-              options={courses.map((item) => {
+              options={courses?.map((item) => {
                 return item?.courseName;
               })}
               placeholder="Kursu Seçiniz"

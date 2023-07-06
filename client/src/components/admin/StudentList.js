@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { useClass } from "../../contexts/ClassContext";
-import AdminStudentTable from "./AdminStudentTable";
+import StudentTable from "./StudentTable";
+import useStudents from "../../hooks/useStudents";
+import Spinner from "../Spinner";
 
-export default function AdminStudentList() {
-  const { students, getBillsByID } = useClass();
+export default function StudentList() {
+  const { getBillsByID } = useClass();
   const [queryStudent, setQueryStudent] = useState();
   const [filteredStudent, setFilteredStudent] = useState();
+
+  const { data: students, isLoading } = useStudents();
 
   useEffect(() => {
     setQueryStudent(students);
   }, [students]);
+
+  
   const writeFilter = (e) => {
     let newFiltered = students.filter((student) => {
       return student.name.toLowerCase().includes(e.target.value.toLowerCase());
@@ -36,7 +42,13 @@ export default function AdminStudentList() {
     },
     [queryStudent, filteredStudent, getBillsByID]
   );
-
+  if (isLoading) {
+    return (
+      <div className="row d-flex justify-content-center align-items-center w-100">
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <div className="card shadow mt-5 container-fluid ">
       <div className="rounded bg-light card-body">
@@ -67,7 +79,7 @@ export default function AdminStudentList() {
           </Stack>
           <hr />
           {queryStudent ? (
-            <AdminStudentTable queryStudent={queryStudent} />
+            <StudentTable queryStudent={queryStudent} />
           ) : (
             <h3 className="text-center">Yükleniyor</h3>
           )}

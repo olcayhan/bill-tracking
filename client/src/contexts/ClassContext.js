@@ -1,16 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
-  getAllStudent,
   addNewStudent,
   deleteStudent,
   togglePaid,
   addBilltoDB,
-  getBillstoDB,
   addAnnouncestoDB,
-  getAnnouncestoDB,
-  deleteAnnouncestoDB,
   addCoursetoDB,
-  getCoursetoDB,
   deleteCoursetoDB,
 } from "../axios";
 
@@ -21,55 +16,31 @@ export function useClass() {
 }
 
 export const ClassProvider = ({ children }) => {
-  const [students, setStudents] = useState([]);
-  const [bills, setBills] = useState([]);
-  const [announces, setAnnounces] = useState([]);
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    getAllStudents();
-    getBills();
-    getAnnounces();
-    getCourses();
-  }, []);
-
-  function getAllStudents() {
-    getAllStudent()
-      .then((res) => {
-        setStudents(res.data.students);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   function addStudent(student) {
     addNewStudent(student)
-      .then((res) => getAllStudents())
+      .then((res) => {})
       .catch((err) => console.log(err));
   }
 
   function deleteStudentById(id) {
     deleteStudent(id)
-      .then((response) => getAllStudents())
+      .then((response) => {})
       .catch((e) => console.log(e));
   }
 
-  function getStudents(name) {
-    return students.filter((student) =>
-      student.courses.some((course) => course.class === name)
-    );
-  }
+  // function getStudents(name) {
+  //   return students.filter((student) =>
+  //     student.courses.some((course) => course.class === name)
+  //   );
+  // }
 
-  function getStudent(studentID) {
-    return students.find((student) => student._id === studentID);
-  }
+  // function getStudent(studentID) {
+  //   return students.find((student) => student._id === studentID);
+  // }
 
   function payBill(id) {
     togglePaid(id)
-      .then((res) => {
-        getBills();
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -77,76 +48,29 @@ export const ClassProvider = ({ children }) => {
 
   function addBill(data) {
     addBilltoDB(data)
-      .then((res) => {
-        getBills();
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
   }
 
-  function getBills() {
-    getBillstoDB()
-      .then((res) => {
-        setBills(res.data.bills);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function getBillsByID(studentID) {
-    return bills.filter((bill) => {
-      return bill.studentID === studentID;
-    });
-  }
+  // function getBillsByID(studentID) {
+  //   return bills.filter((bill) => {
+  //     return bill.studentID === studentID;
+  //   });
+  // }
 
   function addAnnounces(data) {
     addAnnouncestoDB(data)
-      .then((res) => {
-        getAnnounces();
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
   }
-
-  function getAnnounces(data) {
-    getAnnouncestoDB(data)
-      .then((res) => {
-        setAnnounces(res.data.announce);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function deleteAnnounces(data) {
-    deleteAnnouncestoDB(data)
-      .then((res) => {
-        getAnnounces();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  /* Courses  */
 
   function addCourses(data) {
     addCoursetoDB({ ...data, adminID: localStorage.getItem("adminID") })
-      .then((res) => {
-        getCourses();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function getCourses(data) {
-    getCoursetoDB(data)
-      .then((res) => {
-        setCourses(res.data.courses);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -154,10 +78,7 @@ export const ClassProvider = ({ children }) => {
 
   function deleteCourse(data) {
     deleteCoursetoDB(data)
-      .then((res) => {
-        getCourses();
-        getAllStudents();
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -167,20 +88,11 @@ export const ClassProvider = ({ children }) => {
       value={{
         addStudent,
         deleteStudentById,
-        getStudent,
-        getStudents,
         payBill,
         addBill,
-        getBillsByID,
         addAnnounces,
-        deleteAnnounces,
         addCourses,
-        getCourses,
         deleteCourse,
-        announces,
-        students,
-        bills,
-        courses,
       }}
     >
       {children}

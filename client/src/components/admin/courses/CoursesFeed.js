@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { useClass } from "../../../contexts/ClassContext";
-import ShowAllStudentsModal from "../modals/ShowAllStudentsModal";
-import ShowAddCourseModal from "../modals/ShowAddCourseModal";
+import Students from "../modals/Students";
+import Course from "../modals/Course";
 import CoursesItem from "./CoursesItem";
+import useCourses from "../../../hooks/useCourses";
+import useStudents from "../../../hooks/useStudents";
 
 export default function CoursesFeed() {
-  const { courses, getStudents } = useClass();
-  const [isShowShowAllStudents, setIsShowShowAllStudents] = useState();
-  const [isShowAdd, setIsShowShowAdd] = useState();
+  const [isStudents, setIsStudents] = useState();
+  const [isCourse, setIsCourse] = useState();
   const [newStudents, setNewStudents] = useState([]);
   const [classroomName, setClassroomName] = useState("");
 
+  const { data: courses } = useCourses();
+  const { data: students } = useStudents();
+
+  function getStudents(name) {
+    return students.filter((student) =>
+      student.courses.some((course) => course.class === name)
+    );
+  }
+
   const openModal = (name) => {
-    setIsShowShowAllStudents(true);
+    setIsStudents(true);
     setNewStudents(getStudents(name));
     setClassroomName(name);
   };
@@ -23,14 +32,9 @@ export default function CoursesFeed() {
       <Container className="mt-5">
         <div className="d-flex justify-content-center">
           <h1 className="w-75" style={{ color: "#fff" }}>
-            {" "}
             Dersler
           </h1>
-          <button
-            className="btn btn-dark"
-            onClick={() => setIsShowShowAdd(true)}
-          >
-            {" "}
+          <button className="btn btn-dark" onClick={() => setIsCourse(true)}>
             Ders Ekle
           </button>
         </div>
@@ -47,17 +51,14 @@ export default function CoursesFeed() {
         </div>
       </Container>
 
-      <ShowAllStudentsModal
-        show={isShowShowAllStudents}
+      <Students
+        show={isStudents}
         newStudents={newStudents}
-        handleClose={() => setIsShowShowAllStudents(false)}
+        handleClose={() => setIsStudents(false)}
         classroomName={classroomName}
       />
 
-      <ShowAddCourseModal
-        show={isShowAdd}
-        handleClose={() => setIsShowShowAdd(false)}
-      />
+      <Course show={isCourse} handleClose={() => setIsCourse(false)} />
     </>
   );
 }

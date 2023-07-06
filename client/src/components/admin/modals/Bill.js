@@ -4,12 +4,13 @@ import { useClass } from "../../../contexts/ClassContext";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import Spinner from "../../Spinner";
+import useBill from "../../../hooks/useBill";
 
-export default function ShowBillModal({ show, student, handleClose }) {
-  const { payBill, getBillsByID } = useClass();
-  const bills = getBillsByID(student?.billID);
+export default function Bill({ show, student, handleClose }) {
+  const { payBill } = useClass();
+  console.log(student);
   const [isLoading, setLoading] = useState(false);
-
+  const { data: bills } = useBill(student?._id);
   const handlePay = useCallback(
     (item) => {
       setLoading(true);

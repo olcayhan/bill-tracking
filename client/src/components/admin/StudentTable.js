@@ -1,7 +1,7 @@
 import React from "react";
 import QueryStudentTable from "./QueryStudentTable";
 
-export default function AdminStudentTable({ queryStudent }) {
+export default function StudentTable({ queryStudent }) {
   return (
     <>
       {queryStudent.length !== 0 ? (

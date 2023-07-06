@@ -2,11 +2,12 @@ import React, { useCallback, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useClass } from "../../../contexts/ClassContext";
 import { toast } from "react-hot-toast";
+import useCourses from "../../../hooks/useCourses";
 
-export default function ShowAddCourseModal({ show, handleClose }) {
-  const { addCourses, courses, deleteCourse } = useClass();
+export default function Course({ show, handleClose }) {
+  const { addCourses, deleteCourse } = useClass();
   const [courseName, setCourseName] = useState();
-
+  const { data: courses, mutate } = useCourses();
   const handleSubmit = useCallback(() => {
     addCourses({
       courseName: courseName,
@@ -15,6 +16,8 @@ export default function ShowAddCourseModal({ show, handleClose }) {
     });
     toast.success("Kurs Eklendi");
     setCourseName("");
+
+    mutate();
   }, [courseName]);
 
   return (
@@ -44,9 +47,9 @@ export default function ShowAddCourseModal({ show, handleClose }) {
         <table className="table">
           <tbody>
             {courses?.length !== 0 ? (
-              courses.map((course, key) => {
+              courses?.map((course) => {
                 return (
-                  <tr key={key}>
+                  <tr key={course._id}>
                     <td>{course.courseName}</td>
                     <td>:</td>
                     <td>{course.localDate}</td>

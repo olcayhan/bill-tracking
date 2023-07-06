@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Stack } from "react-bootstrap";
 
-export default function ShowAllStudentsModal({
+export default function Students({
   show,
   newStudents,
   handleClose,

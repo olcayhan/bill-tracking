@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
-import { useClass } from "../../../contexts/ClassContext";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 export default function AnnounceItem({ data }) {
-  const { deleteAnnounces } = useClass();
-
-  const handleDelete = useCallback(() => {
-    deleteAnnounces(data._id);
+  const handleDelete = useCallback(async () => {
+    await axios.delete(
+      `https://fatura-takip-backend.onrender.com/announce/delete/${data._id}`
+    );
     toast.error("Anons Silindi");
   }, [data?._id]);
 

@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useClass } from "../../../contexts/ClassContext";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-export default function ShowStudentModal({ show, studentID, handleClose }) {
-  const { deleteStudentById, getStudent } = useClass();
+export default function Student({ show, studentID, handleClose }) {
+  function getStudent(studentID) {
+    return students.find((student) => student._id === studentID);
+  }
+
+  const { deleteStudentById } = useClass();
   const student = getStudent(studentID);
   const [isVisible, setVisible] = useState(true);
   return (

@@ -17,11 +17,12 @@ export default function Cards() {
   const [isStudentUnpaid, setStudentUnpaid] = useState();
   const [isStudentAnnounces, setStudentAnnounces] = useState();
 
-  const { getStudent } = useClass();
   const { id } = useParams();
   const navigate = useNavigate();
-  const student = getStudent(id);
 
+  // const student = getStudent(id);
+
+  let student;
   if (!student) {
     return (
       <div>

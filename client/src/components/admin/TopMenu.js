@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import Announcement from "./modals/Announcement";
 import AddStudent from "./modals/AddStudent";
+import useAnnounce from "../../hooks/useAnnounce";
+import { useAnnounceContext } from "../../contexts/AnnounceContext";
+import { useBillsContext } from "../../contexts/BillContext";
+import { useStudentsContext } from "../../contexts/StudentContext";
 
-export default function TopMenu({ students, bills, announces }) {
+export default function TopMenu() {
   const [isAddStudent, setIsAddStudent] = useState();
   const [isAnnounce, setIsAnnounce] = useState();
+
+  const { announces } = useAnnounceContext();
+  const { bills } = useBillsContext();
+  const { students } = useStudentsContext();
 
   return (
     <div className="row d-flex justify-content-center align-items-center">

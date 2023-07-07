@@ -2,9 +2,13 @@ import React from "react";
 import useBill from "../../../hooks/useBill";
 import BillItem from "./BillItem";
 import { RiErrorWarningLine } from "react-icons/ri";
-
+import Spinner from "../../Spinner";
 const BillFeed = ({ student }) => {
-  const { data: bills, mutate } = useBill(student._id);
+  const { data: bills, isLoading, mutate } = useBill(student._id);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   if (bills?.length === 0) {
     return <p className="text-center">Fatura Bulunmamaktadır</p>;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { useClass } from "../../contexts/ClassContext";
-import useStudents from "../../hooks/useStudents";
+import { useStudentsContext } from "../../contexts/StudentContext";
 import Spinner from "../Spinner";
 import Table from "./table/Table";
 
@@ -10,7 +10,7 @@ export default function StudentList() {
   const [queryStudent, setQueryStudent] = useState();
   const [filteredStudent, setFilteredStudent] = useState();
 
-  const { data: students, isLoading } = useStudents();
+  const { students, isLoading } = useStudentsContext();
 
   useEffect(() => {
     setQueryStudent(students);
@@ -41,7 +41,6 @@ export default function StudentList() {
     },
     [queryStudent, filteredStudent, getBillsByID]
   );
-
 
   if (isLoading) {
     return (

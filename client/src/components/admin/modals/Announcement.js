@@ -1,17 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { useClass } from "../../../contexts/ClassContext";
+import AnnounceFeed from "../announces/AnnounceFeed";
 import { toast } from "react-hot-toast";
-import AnnounceItem from "../announces/AnnounceItem";
-import useAnnounce from "../../../hooks/useAnnounce";
 import axios from "axios";
-import Spinner from "../../Spinner";
+import { useAnnounceContext } from "../../../contexts/AnnounceContext";
 
 export default function Annoucement({ show, handleClose }) {
-  const { addAnnounces } = useClass();
   const [message, setMessage] = useState();
-
-  const { data: announces, isLoading, mutate } = useAnnounce();
+  const { mutate } = useAnnounceContext();
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -47,7 +43,6 @@ export default function Annoucement({ show, handleClose }) {
             setMessage(e.target.value);
           }}
         />
-
         <button
           className="btn btn-success ms-auto m-3 w-100"
           onClick={handleSubmit}
@@ -56,17 +51,7 @@ export default function Annoucement({ show, handleClose }) {
         </button>
         <h1 className="text-center">Duyurular</h1>
         <hr />
-        <div className="flex flex-col w-100">
-          {isLoading ? (
-            <Spinner />
-          ) : announces?.length !== 0 ? (
-            announces?.map((announce, key) => {
-              return <AnnounceItem key={key} data={announce} />;
-            })
-          ) : (
-            <p className="text-center">Duyuru Bulunmamaktadır</p>
-          )}
-        </div>
+        <AnnounceFeed />
       </Modal.Body>
     </Modal>
   );

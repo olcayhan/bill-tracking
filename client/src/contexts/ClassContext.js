@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import {
   addNewStudent,
   deleteStudent,
-  togglePaid,
   addBilltoDB,
   addAnnouncestoDB,
   addCoursetoDB,
@@ -16,6 +15,9 @@ export function useClass() {
 }
 
 export const ClassProvider = ({ children }) => {
+
+
+  
   function addStudent(student) {
     addNewStudent(student)
       .then((res) => {})
@@ -28,23 +30,8 @@ export const ClassProvider = ({ children }) => {
       .catch((e) => console.log(e));
   }
 
-  // function getStudents(name) {
-  //   return students.filter((student) =>
-  //     student.courses.some((course) => course.class === name)
-  //   );
-  // }
 
-  // function getStudent(studentID) {
-  //   return students.find((student) => student._id === studentID);
-  // }
 
-  function payBill(id) {
-    togglePaid(id)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-  }
 
   function addBill(data) {
     addBilltoDB(data)
@@ -54,11 +41,7 @@ export const ClassProvider = ({ children }) => {
       });
   }
 
-  // function getBillsByID(studentID) {
-  //   return bills.filter((bill) => {
-  //     return bill.studentID === studentID;
-  //   });
-  // }
+
 
   function addAnnounces(data) {
     addAnnouncestoDB(data)
@@ -88,7 +71,6 @@ export const ClassProvider = ({ children }) => {
       value={{
         addStudent,
         deleteStudentById,
-        payBill,
         addBill,
         addAnnounces,
         addCourses,

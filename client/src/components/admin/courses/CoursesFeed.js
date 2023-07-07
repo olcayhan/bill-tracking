@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
-import Students from "../modals/Students";
+import Students from "./Students";
 import Course from "../modals/Course";
 import CoursesItem from "./CoursesItem";
-import useCourses from "../../../hooks/useCourses";
-import useStudents from "../../../hooks/useStudents";
+import { useCoursesContext } from "../../../contexts/CourseContext";
+import { useStudentsContext } from "../../../contexts/StudentContext";
 
 export default function CoursesFeed() {
   const [isStudents, setIsStudents] = useState();
@@ -12,8 +11,8 @@ export default function CoursesFeed() {
   const [newStudents, setNewStudents] = useState([]);
   const [classroomName, setClassroomName] = useState("");
 
-  const { data: courses } = useCourses();
-  const { data: students } = useStudents();
+  const { courses } = useCoursesContext();
+  const { students } = useStudentsContext();
 
   function getStudents(name) {
     return students.filter((student) =>
@@ -29,7 +28,7 @@ export default function CoursesFeed() {
 
   return (
     <>
-      <Container className="mt-5">
+      <div className="mt-5">
         <div className="d-flex justify-content-center">
           <h1 className="w-75" style={{ color: "#fff" }}>
             Dersler
@@ -49,7 +48,7 @@ export default function CoursesFeed() {
             <h3 className="text-light text-center m-3">Ders Bulunmamaktadır</h3>
           )}
         </div>
-      </Container>
+      </div>
 
       <Students
         show={isStudents}

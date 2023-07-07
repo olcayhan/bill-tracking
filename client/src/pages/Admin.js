@@ -1,6 +1,4 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-
 import AdminClasses from "../components/admin/courses/CoursesFeed";
 import TopMenu from "../components/admin/TopMenu";
 import StudentList from "../components/admin/StudentList";
@@ -9,8 +7,13 @@ import useStudents from "../hooks/useStudents";
 import useBills from "../hooks/useBills";
 import Spinner from "../components/Spinner";
 
+import { StudentProvider } from "../contexts/StudentContext";
+import { CourseProvider } from "../contexts/CourseContext";
+import { BillProvider } from "../contexts/BillContext";
+import { AnnounceProvider } from "../contexts/AnnounceContext";
+
 export default function AdminStudents() {
-  const { data: announces, isLoading: isLoadingAnnounce } = useAnnounce();
+  const { isLoading: isLoadingAnnounce } = useAnnounce();
   const { data: students, isLoading: isLoadingStudents } = useStudents();
   const { data: bills, isLoading: isLoadingBills } = useBills();
 
@@ -18,12 +21,18 @@ export default function AdminStudents() {
     return <Spinner />;
   }
   return (
-    <>
-      <Container style={{ marginTop: "125px" }}>
-        <TopMenu announces={announces} students={students} bills={bills} />
-        <StudentList />
-      </Container>
-      <AdminClasses />
-    </>
+    <CourseProvider>
+      <StudentProvider>
+        <BillProvider>
+          <AnnounceProvider>
+            <div className="container mt-5">
+              <TopMenu students={students} bills={bills} />
+              <StudentList />
+              <AdminClasses />
+            </div>
+          </AnnounceProvider>
+        </BillProvider>
+      </StudentProvider>
+    </CourseProvider>
   );
 }

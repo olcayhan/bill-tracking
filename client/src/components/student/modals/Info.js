@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-export default function StudentsInfo({ show, handleClose, student }) {
+export default function Info({ show, handleClose, student }) {
   return (
     <Modal show={show} onHide={handleClose} size="m">
       <Modal.Header

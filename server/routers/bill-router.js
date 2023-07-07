@@ -48,7 +48,10 @@ router.get("/get", async (req, res) => {
 router.get("/get/:id", async (req, res) => {
   try {
     let student = await Student.findOne({ _id: req.params.id });
-    let bills = await Bill.find({ studentID: student._id });
+    if (student === undefined) {
+      return res.send({ m: "Student not found" });
+    }
+    let bills = await Bill.find({ studentID: student.billID });
     return res.send({ bills });
   } catch (err) {
     return res.send({ err: err, m: "error" });

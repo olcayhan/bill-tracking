@@ -1,9 +1,10 @@
 import React from "react";
 import { useClass } from "../../../contexts/ClassContext";
 import { Modal } from "react-bootstrap";
+import useAnnounce from "../../../hooks/useAnnounce";
 
-export default function StudentAnnounces({ show, handleClose }) {
-  const { announces } = useClass();
+export default function Announces({ show, handleClose }) {
+  const { data: announces } = useAnnounce();
 
   return (
     <Modal show={show} onHide={handleClose} size="m">

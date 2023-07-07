@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Bill from "./modals/Bill";
+import Bill from "../modals/Bill";
+import useBill from "../../../hooks/useBill";
 
-export default function QueryStudentTable({ student, index }) {
+export default function TableItem({ student, index }) {
   const [isShowBill, setIsShowBill] = useState();
-  const [viewStudent, setViewStudent] = useState();
 
   return (
     <>
@@ -16,7 +16,6 @@ export default function QueryStudentTable({ student, index }) {
           <button
             className="btn btn-success px-5"
             onClick={() => {
-              setViewStudent(student);
               setIsShowBill(true);
             }}
           >
@@ -37,7 +36,7 @@ export default function QueryStudentTable({ student, index }) {
 
       <Bill
         show={isShowBill}
-        student={viewStudent}
+        student={student}
         handleClose={() => setIsShowBill(false)}
       />
     </>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { useClass } from "../../contexts/ClassContext";
-import StudentTable from "./StudentTable";
 import useStudents from "../../hooks/useStudents";
 import Spinner from "../Spinner";
+import Table from "./table/Table";
 
 export default function StudentList() {
   const { getBillsByID } = useClass();
@@ -16,7 +16,6 @@ export default function StudentList() {
     setQueryStudent(students);
   }, [students]);
 
-  
   const writeFilter = (e) => {
     let newFiltered = students.filter((student) => {
       return student.name.toLowerCase().includes(e.target.value.toLowerCase());
@@ -42,6 +41,8 @@ export default function StudentList() {
     },
     [queryStudent, filteredStudent, getBillsByID]
   );
+
+
   if (isLoading) {
     return (
       <div className="row d-flex justify-content-center align-items-center w-100">
@@ -78,11 +79,7 @@ export default function StudentList() {
             </div>
           </Stack>
           <hr />
-          {queryStudent ? (
-            <StudentTable queryStudent={queryStudent} />
-          ) : (
-            <h3 className="text-center">Yükleniyor</h3>
-          )}
+          <Table queryStudent={queryStudent} />
         </div>
       </div>
     </div>

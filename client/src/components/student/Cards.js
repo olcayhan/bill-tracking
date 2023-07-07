@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import StudentsBills from "./modals/StudentsBills";
-import StudentsInfo from "./modals/StudentsInfo";
-import StudentUnpaidBills from "./modals/StudentUnpaidBills";
-import StudentAnnounces from "./modals/StudentAnnounces";
+import StudentsBills from "./modals/Bills";
+import StudentsInfo from "./modals/Info";
+import StudentUnpaidBills from "./modals/UnpaidBills";
+import StudentAnnounces from "./modals/Announces";
 
 import { RiFilePaper2Fill } from "react-icons/ri";
 import { HiInformationCircle } from "react-icons/hi";

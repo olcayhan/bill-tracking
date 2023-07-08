@@ -2,13 +2,12 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { useClass } from "../../../contexts/ClassContext";
 
-
 export default function UnpaidBills({ show, handleClose, student }) {
-  const { getBillsByID } = useClass();
+  // const { getBillsByID } = useClass();
 
-  let bills = getBillsByID(student?.billID);
-  bills = bills.filter((bill) => bill.isPaid === false);
-
+  // let bills = getBillsByID(student?.billID);
+  // bills = bills.filter((bill) => bill.isPaid === false);
+  let bills;
   return (
     <Modal show={show} onHide={handleClose} size="m">
       <Modal.Header

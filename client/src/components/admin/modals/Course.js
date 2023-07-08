@@ -1,23 +1,28 @@
 import React, { useCallback, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { useClass } from "../../../contexts/ClassContext";
+import { useCoursesContext } from "../../../contexts/CourseContext";
 import { toast } from "react-hot-toast";
-import useCourses from "../../../hooks/useCourses";
+import axios from "axios";
+import CourseFeed from "../course/CourseFeed";
 
 export default function Course({ show, handleClose }) {
-  const { addCourses, deleteCourse } = useClass();
   const [courseName, setCourseName] = useState();
-  const { data: courses, mutate } = useCourses();
-  const handleSubmit = useCallback(() => {
-    addCourses({
-      courseName: courseName,
-      localDate: new Date().toLocaleDateString(),
-      date: Date.now(),
-    });
-    toast.success("Kurs Eklendi");
-    setCourseName("");
+  const { mutate } = useCoursesContext();
 
-    mutate();
+  const handleSubmit = useCallback(async () => {
+    try {
+      await axios.post("https://fatura-takip-backend.onrender.com/course/add", {
+        courseName: courseName,
+        localDate: new Date().toLocaleDateString(),
+        date: Date.now(),
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      toast.success("Kurs Eklendi");
+      setCourseName("");
+      mutate();
+    }
   }, [courseName]);
 
   return (
@@ -44,34 +49,7 @@ export default function Course({ show, handleClose }) {
 
         <h1 className="text-center">Kurslar</h1>
         <hr />
-        <table className="table">
-          <tbody>
-            {courses?.length !== 0 ? (
-              courses?.map((course) => {
-                return (
-                  <tr key={course._id}>
-                    <td>{course.courseName}</td>
-                    <td>:</td>
-                    <td>{course.localDate}</td>
-                    <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => {
-                          deleteCourse(course?._id);
-                          handleClose();
-                        }}
-                      >
-                        Sil
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
-              <p className="text-center">Kurs Bulunmamaktadır</p>
-            )}
-          </tbody>
-        </table>
+        <CourseFeed />
       </Modal.Body>
     </Modal>
   );

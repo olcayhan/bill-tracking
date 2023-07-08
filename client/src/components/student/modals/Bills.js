@@ -3,9 +3,9 @@ import { Modal } from "react-bootstrap";
 import { useClass } from "../../../contexts/ClassContext";
 
 export default function Bills({ show, handleClose, student }) {
-  const { getBillsByID } = useClass();
-  const bills = getBillsByID(student?.billID);
-
+  // const { getBillsByID } = useClass();
+  // const bills = getBillsByID(student?.billID);
+  let bills;
   return (
     <Modal show={show} onHide={handleClose} size="m">
       <Modal.Header

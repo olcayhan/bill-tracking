@@ -6,7 +6,6 @@ import Spinner from "../Spinner";
 import Table from "./table/Table";
 
 export default function StudentList() {
-  const { getBillsByID } = useClass();
   const [queryStudent, setQueryStudent] = useState();
   const [filteredStudent, setFilteredStudent] = useState();
 
@@ -26,20 +25,20 @@ export default function StudentList() {
 
   const toggleFilter = useCallback(
     (e) => {
-      let studentArray = queryStudent.filter((student) => {
-        return (
-          getBillsByID(student.billID).filter((course) => {
-            return !course.isPaid;
-          }).length !== 0
-        );
-      });
-      if (e.target.checked) setQueryStudent(studentArray);
-      else
-        filteredStudent
-          ? setQueryStudent(filteredStudent)
-          : setQueryStudent(students);
+      // let studentArray = queryStudent.filter((student) => {
+      //   return (
+      //      getBillsByID(student.billID).filter((course) => {
+      //        return !course.isPaid;
+      //      }).length !== 0
+      //   );
+      // });
+      // if (e.target.checked) setQueryStudent(studentArray);
+      // else
+      //   filteredStudent
+      //     ? setQueryStudent(filteredStudent)
+      //     : setQueryStudent(students);
     },
-    [queryStudent, filteredStudent, getBillsByID]
+    [queryStudent, filteredStudent]
   );
 
   if (isLoading) {

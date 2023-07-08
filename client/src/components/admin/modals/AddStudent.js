@@ -1,22 +1,12 @@
+import axios from "axios";
+
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { useClass } from "../../../contexts/ClassContext";
-import Multiselect from "multiselect-react-dropdown";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePickerForm from "../DatePickerForm";
-import { v4 as uuid } from "uuid";
 import { toast } from "react-hot-toast";
-import axios from "axios";
-import { useCoursesContext } from "../../../contexts/CourseContext";
 import { useStudentsContext } from "../../../contexts/StudentContext";
-import { useBillsContext } from "../../../contexts/BillContext";
 
 export default function AddStudent({ show, handleClose }) {
-  const [tempCourses, setCourses] = useState([]);
-  const [selectCourse, setSelectCourse] = useState([]);
-  const { courses } = useCoursesContext();
   const { mutate: mutateStudent } = useStudentsContext();
-  const { mutate: mutateBills } = useBillsContext();
   const [student, setStudent] = useState({
     date: new Date().toLocaleDateString(),
     name: "",
@@ -26,8 +16,6 @@ export default function AddStudent({ show, handleClose }) {
     password: "",
     courses: [],
   });
-
-  console.log(student);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,8 +53,6 @@ export default function AddStudent({ show, handleClose }) {
     } catch (e) {
       console.log(e);
     } finally {
-      setCourses([]);
-      setSelectCourse([]);
       setStudent({
         date: new Date().toLocaleDateString(),
         name: "",

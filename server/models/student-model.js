@@ -36,10 +36,6 @@ const studentSchema = new Schema(
     courses: {
       type: Array,
     },
-    billID: {
-      type: String,
-      required: true,
-    },
   },
   { collection: "students" }
 );

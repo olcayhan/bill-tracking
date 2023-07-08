@@ -17,7 +17,6 @@ export default function AddStudent({ show, handleClose }) {
   const { courses } = useCoursesContext();
   const { mutate: mutateStudent } = useStudentsContext();
   const { mutate: mutateBills } = useBillsContext();
-
   const [student, setStudent] = useState({
     date: new Date().toLocaleDateString(),
     name: "",
@@ -26,8 +25,8 @@ export default function AddStudent({ show, handleClose }) {
     email: "",
     password: "",
     courses: [],
-    billID: uuid(),
   });
+
   console.log(student);
 
   const handleSubmit = async (e) => {
@@ -39,30 +38,30 @@ export default function AddStudent({ show, handleClose }) {
         student
       );
 
-      selectCourse?.map(async (course) => {
-        try {
-          let courseID = courses?.find(
-            (item) => item.courseName === course.class
-          )._id;
-          let courseStartDate = new Date(course.date);
-          for (let index = 0; index < 12; index++) {
-            courseStartDate.setMonth(courseStartDate.getMonth() + 1);
-            await axios.post(
-              "https://fatura-takip-backend.onrender.com/bill/add",
-              {
-                ...course,
-                courseID: courseID,
-                date: new Date(courseStartDate),
-                localDate: new Date(courseStartDate).toLocaleDateString(),
-              }
-            );
-          }
-        } catch (err) {
-          console.log(err);
-        } finally {
-          mutateBills();
-        }
-      });
+      // selectCourse?.map(async (course) => {
+      //   try {
+      //     let courseID = courses?.find(
+      //       (item) => item.courseName === course.class
+      //     )._id;
+      //     let courseStartDate = new Date(course.date);
+      //     for (let index = 0; index < 12; index++) {
+      //       courseStartDate.setMonth(courseStartDate.getMonth() + 1);
+      //       await axios.post(
+      //         "https://fatura-takip-backend.onrender.com/bill/add",
+      //         {
+      //           ...course,
+      //           courseID: courseID,
+      //           date: new Date(courseStartDate),
+      //           localDate: new Date(courseStartDate).toLocaleDateString(),
+      //         }
+      //       );
+      //     }
+      //   } catch (err) {
+      //     console.log(err);
+      //   } finally {
+      //     mutateBills();
+      //   }
+      // });
     } catch (e) {
       console.log(e);
     } finally {
@@ -76,10 +75,8 @@ export default function AddStudent({ show, handleClose }) {
         email: "",
         password: "",
         courses: [],
-        billID: uuid(),
       });
       toast.success("Öğrenci Eklendi");
-      toast.success("Faturalar Eklendi");
 
       mutateStudent();
 
@@ -155,7 +152,7 @@ export default function AddStudent({ show, handleClose }) {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label>Kurslar</Form.Label>
             <Multiselect
               className="text-dark"
@@ -176,8 +173,8 @@ export default function AddStudent({ show, handleClose }) {
               })}
               placeholder="Kursu Seçiniz"
             />
-          </Form.Group>
-
+          </Form.Group> */}
+          {/* 
           {tempCourses?.map((item, key) => {
             return (
               <DatePickerForm
@@ -188,16 +185,13 @@ export default function AddStudent({ show, handleClose }) {
                 setSelectCourse={setSelectCourse}
               />
             );
-          })}
+          })} */}
 
           <Form.Group className="d-flex justify-content-end">
             <Button
               disabled={student.name.length < 2 || student.surname.length < 1}
               style={{ backgroundColor: "#511281", border: "none" }}
               type="submit"
-              onClick={() =>
-                setStudent({ ...student, courses: [...selectCourse] })
-              }
             >
               Öğrenci Ekle
             </Button>

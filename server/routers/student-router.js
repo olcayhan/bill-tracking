@@ -14,7 +14,6 @@ router.post("/add", async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       courses: req.body.courses,
-      billID: req.body.billID,
     });
 
     await newStudent.save();

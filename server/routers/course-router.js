@@ -46,11 +46,11 @@ router.delete("/delete/:id", async (req, res) => {
             let updatedCourses = student?.courses.filter((item) => {
                 return item.class !== course?.courseName
             })
-            console.log(updatedCourses)
+           console.log(updatedCourses)
             await Student.findByIdAndUpdate(
                 { _id: student.id },
                 { $set: { courses: updatedCourses } }
-            )
+            ) 
         })
         await Course.deleteOne({ _id: id });
         await Bill.deleteMany({ courseID: id })

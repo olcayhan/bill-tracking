@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Bill from "../modals/Bill";
-import useBill from "../../../hooks/useBill";
+import Student from "../modals/Student";
 
 export default function TableItem({ student, index }) {
   const [isShowBill, setIsShowBill] = useState();
+  const [isShowStdudent, setIsShowStudent] = useState();
 
   return (
     <>
@@ -24,13 +25,14 @@ export default function TableItem({ student, index }) {
         </td>
 
         <td>
-          <a
+          <button
             className="btn btn-warning font-weight-bold px-3"
-            href={`student/${student._id}`}
-            onClick={() => {}}
+            onClick={() => {
+              setIsShowStudent(true);
+            }}
           >
             <i className="fa-sharp fa-solid fa-circle-info fa-2x text-light"></i>
-          </a>
+          </button>
         </td>
       </tr>
 
@@ -38,6 +40,12 @@ export default function TableItem({ student, index }) {
         show={isShowBill}
         student={student}
         handleClose={() => setIsShowBill(false)}
+      />
+
+      <Student
+        show={isShowStdudent}
+        student={student}
+        handleClose={() => setIsShowStudent(false)}
       />
     </>
   );

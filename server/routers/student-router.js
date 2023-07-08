@@ -37,8 +37,7 @@ router.post("/delete", async (req, res) => {
   try {
     console.log(req.body);
     const result = await Student.findByIdAndDelete({ _id: req.body._id });
-    const bills = await Bill.deleteMany({ studentID: req.body.billID });
-    console.log(bills);
+    const bills = await Bill.deleteMany({ studentID: req.body._id });
     return res.send({ result, bills });
   } catch (e) {
     return res.send({ e: e, m: "error" });

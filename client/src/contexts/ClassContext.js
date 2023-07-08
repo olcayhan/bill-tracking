@@ -8,6 +8,7 @@ export function useClass() {
 }
 
 export const ClassProvider = ({ children }) => {
+  
   function deleteStudentById(id) {
     deleteStudent(id)
       .then((response) => {})

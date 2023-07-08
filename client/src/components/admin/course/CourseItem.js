@@ -33,6 +33,7 @@ const CourseItem = ({ course }) => {
       <button
         className="btn btn-danger"
         onClick={() => handleDelete(course?._id)}
+        disabled={isLoading}
       >
         {isLoading ? <Spinner /> : "Sil"}
       </button>

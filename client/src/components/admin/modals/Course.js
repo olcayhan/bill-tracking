@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { useCoursesContext } from "../../../contexts/CourseContext";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -8,9 +8,10 @@ import CourseFeed from "../course/CourseFeed";
 export default function Course({ show, handleClose }) {
   const [courseName, setCourseName] = useState();
   const { mutate } = useCoursesContext();
-
+  const [isLoading, setLoading] = useState(false);
   const handleSubmit = useCallback(async () => {
     try {
+      setLoading(true);
       await axios.post("https://fatura-takip-backend.onrender.com/course/add", {
         courseName: courseName,
         localDate: new Date().toLocaleDateString(),
@@ -22,6 +23,7 @@ export default function Course({ show, handleClose }) {
       toast.success("Kurs Eklendi");
       setCourseName("");
       mutate();
+      setLoading(false);
     }
   }, [courseName]);
 
@@ -43,8 +45,16 @@ export default function Course({ show, handleClose }) {
         <button
           className="btn btn-success ms-auto m-3 w-100"
           onClick={handleSubmit}
+          disabled={isLoading}
         >
-          Ekle
+          {isLoading ? (
+            <div className="d-flex flex-row justify-content-center align-items-center gap-4">
+              <div>Ekleniyor</div>
+              <Spinner />
+            </div>
+          ) : (
+            "Ekle"
+          )}
         </button>
 
         <h1 className="text-center">Kurslar</h1>

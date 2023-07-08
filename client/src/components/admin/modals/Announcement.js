@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import AnnounceFeed from "../announces/AnnounceFeed";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -8,9 +8,11 @@ import { useAnnounceContext } from "../../../contexts/AnnounceContext";
 export default function Annoucement({ show, handleClose }) {
   const [message, setMessage] = useState();
   const { mutate } = useAnnounceContext();
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = useCallback(async () => {
     try {
+      setLoading(true);
       await axios.post(
         "https://fatura-takip-backend.onrender.com/announce/add",
         {
@@ -25,6 +27,7 @@ export default function Annoucement({ show, handleClose }) {
       toast.success("Anons Eklendi");
       setMessage("");
       mutate();
+      setLoading(false);
     }
   }, [message]);
 
@@ -46,8 +49,16 @@ export default function Annoucement({ show, handleClose }) {
         <button
           className="btn btn-success ms-auto m-3 w-100"
           onClick={handleSubmit}
+          disabled={isLoading}
         >
-          Gönder
+          {isLoading ? (
+            <div className="d-flex flex-row justify-content-center align-items-center gap-4">
+              <div>Gönderiliyor</div>
+              <Spinner />
+            </div>
+          ) : (
+            "Gönder"
+          )}
         </button>
         <h1 className="text-center">Duyurular</h1>
         <hr />

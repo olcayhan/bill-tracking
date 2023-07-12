@@ -29,7 +29,7 @@ export default function Annoucement({ show, handleClose }) {
       mutate();
       setLoading(false);
     }
-  }, [message]);
+  }, [message, mutate]);
 
   return (
     <Modal show={show} onHide={handleClose}>

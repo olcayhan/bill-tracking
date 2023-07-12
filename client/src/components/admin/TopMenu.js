@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Announcement from "./modals/Announcement";
 import AddStudent from "./modals/AddStudent";
-import useAnnounce from "../../hooks/useAnnounce";
 import { useAnnounceContext } from "../../contexts/AnnounceContext";
 import { useBillsContext } from "../../contexts/BillContext";
 import { useStudentsContext } from "../../contexts/StudentContext";

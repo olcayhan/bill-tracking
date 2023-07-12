@@ -23,7 +23,7 @@ const CourseItem = ({ course }) => {
         setIsLoading(false);
       }
     },
-    [isLoading]
+    [mutate]
   );
 
   return (

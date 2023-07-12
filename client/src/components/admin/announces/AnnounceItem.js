@@ -19,7 +19,7 @@ export default function AnnounceItem({ data }) {
       mutate();
       setLoading(false);
     }
-  }, [data?._id]);
+  }, [data?._id,mutate]);
 
   return (
     <div

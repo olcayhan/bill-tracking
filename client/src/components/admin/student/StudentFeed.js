@@ -21,7 +21,7 @@ const StudentFeed = ({ student }) => {
       mutate();
       setLoading(false);
     }
-  }, []);
+  }, [student._id, mutate]);
 
   return (
     <>

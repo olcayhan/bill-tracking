@@ -45,6 +45,8 @@ const BillFeed = ({ student }) => {
                 color={"#e78c46"}
               />
             );
+          } else {
+            return <></>;
           }
         })}
     </>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Stack } from "react-bootstrap";
-import { useClass } from "../../contexts/ClassContext";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import Spinner from "../Spinner";
 import Table from "./table/Table";
 
 export default function StudentList() {
   const [queryStudent, setQueryStudent] = useState();
-  const [filteredStudent, setFilteredStudent] = useState();
 
   const { students, isLoading } = useStudentsContext();
 
@@ -19,26 +17,14 @@ export default function StudentList() {
     let newFiltered = students.filter((student) => {
       return student.name.toLowerCase().includes(e.target.value.toLowerCase());
     });
-    setFilteredStudent(newFiltered);
     setQueryStudent(newFiltered);
   };
 
   const toggleFilter = useCallback(
     (e) => {
-      // let studentArray = queryStudent.filter((student) => {
-      //   return (
-      //      getBillsByID(student.billID).filter((course) => {
-      //        return !course.isPaid;
-      //      }).length !== 0
-      //   );
-      // });
-      // if (e.target.checked) setQueryStudent(studentArray);
-      // else
-      //   filteredStudent
-      //     ? setQueryStudent(filteredStudent)
-      //     : setQueryStudent(students);
+
     },
-    [queryStudent, filteredStudent]
+    []
   );
 
   if (isLoading) {

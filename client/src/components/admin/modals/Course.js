@@ -25,7 +25,7 @@ export default function Course({ show, handleClose }) {
       mutate();
       setLoading(false);
     }
-  }, [courseName]);
+  }, [courseName,mutate]);
 
   return (
     <Modal show={show} onHide={handleClose}>

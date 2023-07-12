@@ -23,7 +23,7 @@ const BillItem = ({ item, mutate, Icon, color }) => {
         mutate();
       }
     },
-    [isLoading]
+    [mutate]
   );
 
   return (

@@ -22,7 +22,7 @@ export default function AddStudent({ show, handleClose }) {
 
     try {
       await axios.post(
-        "https://fatura-takip-backend.onrender.com/student/add",
+        "https://bill-track.onrender.com/student/add",
         student
       );
 

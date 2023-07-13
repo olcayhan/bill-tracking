@@ -12,7 +12,7 @@ const BillItem = ({ item, mutate, Icon, color }) => {
     async (item) => {
       setLoading(true);
       try {
-        await axios.put("https://fatura-takip-backend.onrender.com/bill/toggle", item);
+        await axios.put("https://bill-track.onrender.com/bill/toggle", item);
         item.isPaid
           ? toast.success("Fatura Ödemesi Geri Alındı")
           : toast.success("Fatura Ödendi");

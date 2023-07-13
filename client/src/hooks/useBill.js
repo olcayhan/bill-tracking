@@ -11,7 +11,7 @@ const useBill = (id) => {
 
       const response = id
         ? await axios.get(
-            `https://fatura-takip-backend.onrender.com/bill/get/${id}`
+            `https://bill-track.onrender.com/bill/get/${id}`
           )
         : null;
       setData(response.data.bills);

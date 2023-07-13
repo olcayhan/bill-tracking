@@ -9,7 +9,7 @@ const useStudents = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        "https://fatura-takip-backend.onrender.com/student/get"
+        "https://bill-track.onrender.com/student/get"
       );
       setData(response.data.students);
     } catch (err) {

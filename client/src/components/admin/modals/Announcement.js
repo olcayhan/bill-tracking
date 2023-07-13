@@ -14,7 +14,7 @@ export default function Annoucement({ show, handleClose }) {
     try {
       setLoading(true);
       await axios.post(
-        "https://fatura-takip-backend.onrender.com/announce/add",
+        "https://bill-track.onrender.com/announce/add",
         {
           message: message,
           localDate: new Date().toLocaleDateString(),

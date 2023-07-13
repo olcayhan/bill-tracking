@@ -12,7 +12,7 @@ const StudentFeed = ({ student }) => {
     try {
       setLoading(true);
       await axios.post(
-        "https://fatura-takip-backend.onrender.com/student/delete",
+        "https://bill-track.onrender.com/student/delete",
         { _id: student._id }
       );
     } catch (err) {

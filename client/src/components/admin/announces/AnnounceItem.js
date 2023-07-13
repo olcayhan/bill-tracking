@@ -11,7 +11,7 @@ export default function AnnounceItem({ data }) {
     try {
       setLoading(true);
       await axios.delete(
-        `https://fatura-takip-backend.onrender.com/announce/delete/${data._id}`
+        `https://bill-track.onrender.com/announce/delete/${data._id}`
       );
     } catch (e) {
       toast.error("Anons Silindi");

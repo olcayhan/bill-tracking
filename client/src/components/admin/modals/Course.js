@@ -12,7 +12,7 @@ export default function Course({ show, handleClose }) {
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://fatura-takip-backend.onrender.com/course/add", {
+      await axios.post("https://bill-track.onrender.com/course/add", {
         courseName: courseName,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),

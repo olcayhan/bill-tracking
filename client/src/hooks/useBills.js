@@ -9,7 +9,7 @@ const useBills = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        "https://fatura-takip-backend.onrender.com/bill/get"
+        "https://bill-track.onrender.com/bill/get"
       );
       setData(response.data.bills);
     } catch (err) {

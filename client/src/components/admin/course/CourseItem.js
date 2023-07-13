@@ -13,7 +13,7 @@ const CourseItem = ({ course }) => {
       try {
         setIsLoading(true);
         await axios.delete(
-          `https://fatura-takip-backend.onrender.com/course/delete/${id}`
+          `https://bill-track.onrender.com/course/delete/${id}`
         );
       } catch (e) {
         console.log(e);

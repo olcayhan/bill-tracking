@@ -6,6 +6,11 @@ import { useBillsContext } from "../../contexts/BillContext";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import Card from "./Card";
 
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { RiBillFill } from "react-icons/ri";
+import { MdAnnouncement } from "react-icons/md";
+import { Spinner } from "react-bootstrap";
+
 export default function TopMenu() {
   const [isAddStudent, setIsAddStudent] = useState();
   const [isAnnounce, setIsAnnounce] = useState();
@@ -18,30 +23,30 @@ export default function TopMenu() {
     <div className="d-flex flex-row flex-wrap justify-content-center align-items-center gap-5">
       <Card
         title="Student"
-        length={students?.length}
+        length={students ? students.length : <Spinner />}
         color="#0B666A"
         callback={() => {
           setIsAddStudent(true);
         }}
-        icon={<i className="fas fa-user-plus fa-3x text-light"></i>}
+        icon={<AiOutlineUserAdd color="white" size={50} />}
       />
 
       <Card
         title="Bills"
-        length={bills?.length}
+        length={bills ? bills.length : <Spinner />}
         color="#4A55A2"
         callback={() => {}}
-        icon={<i className="fas fa-duotone fa-receipt fa-3x text-light"></i>}
+        icon={<RiBillFill size={50} color="white" />}
       />
 
       <Card
         title="Announces"
-        length={announces?.length}
+        length={announces ? announces.length : <Spinner />}
         color="#898121"
         callback={() => {
           setIsAnnounce(true);
         }}
-        icon={<i className="fas fa-bullhorn fa-3x text-light"></i>}
+        icon={<MdAnnouncement color="white" size={50} />}
       />
 
       <AddStudent

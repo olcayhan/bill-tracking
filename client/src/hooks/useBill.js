@@ -14,7 +14,6 @@ const useBill = (id) => {
             `https://fatura-takip-backend.onrender.com/bill/get/${id}`
           )
         : null;
-      console.log(response);
       setData(response.data.bills);
     } catch (err) {
       console.log(err);

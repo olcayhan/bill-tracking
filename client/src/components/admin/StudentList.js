@@ -20,12 +20,7 @@ export default function StudentList() {
     setQueryStudent(newFiltered);
   };
 
-  const toggleFilter = useCallback(
-    (e) => {
-
-    },
-    []
-  );
+  const toggleFilter = useCallback((e) => {}, []);
 
   if (isLoading) {
     return (
@@ -35,37 +30,37 @@ export default function StudentList() {
     );
   }
   return (
-    <div className="card shadow mt-5 container-fluid ">
-      <div className="rounded bg-light card-body">
-        <div className="studentTable table-responsive rounded p-5">
-          <Stack direction="horizontal" gap={3}>
-            <div>
-              <i className="fa-solid fa-magnifying-glass fa-2x text-primary"></i>
-            </div>
-            <Form.Control
-              className="border border-5 border-primary text-dark-300"
-              style={{ width: "400px" }}
-              type="text"
-              placeholder="Öğrenci ismini giriniz..."
-              onChange={writeFilter}
-            />
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                onChange={toggleFilter}
-              />
-              <label className="form-check-label" htmlFor="flexCheckDefault">
-                Ödenmemiş Faturaları Göster
-              </label>
-            </div>
-          </Stack>
-          <hr />
-          <Table queryStudent={queryStudent} />
+    <div
+      className="d-flex flex-column justify-content-center align-items-start mt-5 rounded-3 p-5 gap-5"
+      style={{ background: "#F5F5F5" }}
+    >
+      <div className="d-flex flex-row justify-content-start align-items-center gap-5 w-100">
+        <div
+          className="d-flex flex-row justify-content-start align-items-center border border-dark rounded-5 py-2 px-3 text-dark-300 gap-3 w-50"
+        >
+          <i className="fa-solid fa-magnifying-glass fa-2x text-dark"></i>
+          <input
+            className="border-0 bg-transparent px-2 py-1 text-dark-300 w-100"
+            style={{ outline: "none" }}
+            type="text"
+            placeholder="Öğrenci ismini giriniz..."
+          />
         </div>
+        <div className="d-flex flex-row justify-content-center align-items-center gap-2">
+          <input
+            className=""
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            onChange={toggleFilter}
+          />
+          <label className="fw-semibold fs-5" htmlFor="flexCheckDefault">
+            Unpaid
+          </label>
+        </div>
+        <hr />
       </div>
+      <Table queryStudent={queryStudent} />
     </div>
   );
 }

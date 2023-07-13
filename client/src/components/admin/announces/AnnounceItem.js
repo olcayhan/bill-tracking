@@ -19,22 +19,17 @@ export default function AnnounceItem({ data }) {
       mutate();
       setLoading(false);
     }
-  }, [data?._id,mutate]);
+  }, [data?._id, mutate]);
 
   return (
     <div
-      className="d-flex p-3 m-2"
-      style={{
-        backgroundColor: "#ddd",
-        justifyContent: "space-between",
-        alignItems: "center",
-        boxShadow: "revert",
-      }}
+      className="d-flex flex-row justify-content-between align-items-center fw-semibold fs-6 p-3 m-2"
+      style={{ background: "#526D82", color: "#fff" }}
     >
-      <p className="w-50">{data.message}</p>
-      <p>{data.localDate}</p>
+      <div className="w-50">{data.message}</div>
+      <div>{data.localDate}</div>
       <button
-        className="btn btn-danger"
+        className="btn btn-danger fw-semibold"
         onClick={handleDelete}
         disabled={isLoading}
       >

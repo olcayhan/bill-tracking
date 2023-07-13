@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { Modal, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { useCoursesContext } from "../../../contexts/CourseContext";
 import { toast } from "react-hot-toast";
+
 import axios from "axios";
 import CourseFeed from "../course/CourseFeed";
+import ModalContent from "../../ModalContent";
 
 export default function Course({ show, handleClose }) {
   const [courseName, setCourseName] = useState();
@@ -25,42 +27,46 @@ export default function Course({ show, handleClose }) {
       mutate();
       setLoading(false);
     }
-  }, [courseName,mutate]);
+  }, [courseName, mutate]);
+
+  const bodyContent = (
+    <>
+      <input
+        className="w-100 h-auto m-1 p-3"
+        type="text"
+        placeholder="Kurs ismini bu kısıma yazınız ..."
+        onChange={(e) => {
+          setCourseName(e.target.value);
+        }}
+        value={courseName}
+      />
+      <button
+        className="btn btn-success ms-auto m-3 w-100"
+        onClick={handleSubmit}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div className="d-flex flex-row justify-content-center align-items-center gap-4">
+            <div>Ekleniyor</div>
+            <Spinner />
+          </div>
+        ) : (
+          "Ekle"
+        )}
+      </button>
+
+      <h1 className="text-center">Kurslar</h1>
+      <hr />
+      <CourseFeed />
+    </>
+  );
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton className="bg-secondary">
-        <Modal.Title>Kurs Ekle</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <input
-          className="w-100 h-auto m-1 p-3"
-          type="text"
-          placeholder="Kurs ismini bu kısıma yazınız ..."
-          onChange={(e) => {
-            setCourseName(e.target.value);
-          }}
-          value={courseName}
-        />
-        <button
-          className="btn btn-success ms-auto m-3 w-100"
-          onClick={handleSubmit}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-              <div>Ekleniyor</div>
-              <Spinner />
-            </div>
-          ) : (
-            "Ekle"
-          )}
-        </button>
-
-        <h1 className="text-center">Kurslar</h1>
-        <hr />
-        <CourseFeed />
-      </Modal.Body>
-    </Modal>
+    <ModalContent
+      title="Kurs Ekle"
+      bodyContent={bodyContent}
+      show={show}
+      handleClose={handleClose}
+    />
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Students from "./Students";
+import Students from "../modals/Students";
 import Course from "../modals/Course";
 import CoursesItem from "./CoursesItem";
 import { useCoursesContext } from "../../../contexts/CourseContext";

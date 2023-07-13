@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { Modal, Spinner } from "react-bootstrap";
-import AnnounceFeed from "../announces/AnnounceFeed";
+import { Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { useAnnounceContext } from "../../../contexts/AnnounceContext";
+
+import axios from "axios";
+import AnnounceFeed from "../announces/AnnounceFeed";
+import ModalContent from "../../ModalContent";
 
 export default function Annoucement({ show, handleClose }) {
   const [message, setMessage] = useState();
@@ -13,14 +15,11 @@ export default function Annoucement({ show, handleClose }) {
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post(
-        "https://bill-track.onrender.com/announce/add",
-        {
-          message: message,
-          localDate: new Date().toLocaleDateString(),
-          date: Date.now(),
-        }
-      );
+      await axios.post("https://bill-track.onrender.com/announce/add", {
+        message: message,
+        localDate: new Date().toLocaleDateString(),
+        date: Date.now(),
+      });
     } catch (err) {
       console.log(err);
     } finally {
@@ -31,39 +30,44 @@ export default function Annoucement({ show, handleClose }) {
     }
   }, [message, mutate]);
 
+  const bodyContent = (
+    <>
+      <input
+        className="w-100 h-auto m-1 p-3 bg-transparent border border-light rounded-3 text-light"
+        style={{ outline: "none" }}
+        type="text"
+        placeholder="Duyurunuzu bu kısıma yazınız ..."
+        value={message}
+        onChange={(e) => {
+          setMessage(e.target.value);
+        }}
+      />
+      <button
+        className=" mx-auto m-3 w-100 border-0 p-2 rounded-2 fs-5 text-light"
+        style={{ backgroundColor: "#526D82" }}
+        onClick={handleSubmit}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div className="d-flex flex-row justify-content-center align-items-center gap-4">
+            <div>Gönderiliyor</div>
+            <Spinner />
+          </div>
+        ) : (
+          "Gönder"
+        )}
+      </button>
+      <hr />
+      <AnnounceFeed />
+    </>
+  );
+
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton className="bg-secondary">
-        <Modal.Title>Duyuru Ekle</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <input
-          className="w-100 h-auto m-1 p-3"
-          type="text"
-          placeholder="Duyurunuzu bu kısıma yazınız ..."
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        />
-        <button
-          className="btn btn-success ms-auto m-3 w-100"
-          onClick={handleSubmit}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-              <div>Gönderiliyor</div>
-              <Spinner />
-            </div>
-          ) : (
-            "Gönder"
-          )}
-        </button>
-        <h1 className="text-center">Duyurular</h1>
-        <hr />
-        <AnnounceFeed />
-      </Modal.Body>
-    </Modal>
+    <ModalContent
+      title="Announcement"
+      bodyContent={bodyContent}
+      show={show}
+      handleClose={handleClose}
+    />
   );
 }

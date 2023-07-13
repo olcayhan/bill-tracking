@@ -1,17 +1,14 @@
 import React from "react";
 import BillFeed from "../bills/BillFeed";
-
-import { Modal } from "react-bootstrap";
+import ModalContent from "../../ModalContent";
 
 export default function Bill({ show, handleClose, student }) {
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton className="bg-secondary">
-        <Modal.Title>Faturalar</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <BillFeed student={student} />
-      </Modal.Body>
-    </Modal>
+    <ModalContent
+      title="Faturalar"
+      show={show}
+      handleClose={handleClose}
+      bodyContent={<BillFeed student={student} />}
+    />
   );
 }

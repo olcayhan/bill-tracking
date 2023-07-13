@@ -1,15 +1,13 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
 import StudentFeed from "../student/StudentFeed";
+import ModalContent from "../../ModalContent";
 export default function Student({ show, student, handleClose }) {
   return (
-    <Modal show={show} onHide={handleClose} size="m">
-      <Modal.Header closeButton className="bg-secondary">
-        <h4> Öğrenci Detayları </h4>
-      </Modal.Header>
-      <Modal.Body>
-        <StudentFeed student={student} />
-      </Modal.Body>
-    </Modal>
+    <ModalContent
+      bodyContent={<StudentFeed student={student} />}
+      title="Öğrenci Detayları"
+      show={show}
+      handleClose={handleClose}
+    />
   );
 }

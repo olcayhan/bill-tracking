@@ -11,7 +11,9 @@ const AnnounceFeed = () => {
     return <Spinner />;
   }
   if (announces?.length === 0) {
-    return <p className="text-center">Duyuru Bulunmamaktadır</p>;
+    return (
+      <p className="text-center text-light fs-5">Duyuru Bulunmamaktadır</p>
+    );
   }
 
   return (

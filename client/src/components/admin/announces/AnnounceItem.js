@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useAnnounceContext } from "../../../contexts/AnnounceContext";
 import { Spinner } from "react-bootstrap";
+
 export default function AnnounceItem({ data }) {
   const { mutate } = useAnnounceContext();
   const [isLoading, setLoading] = useState(false);
@@ -14,8 +15,9 @@ export default function AnnounceItem({ data }) {
         `https://bill-track.onrender.com/announce/delete/${data._id}`
       );
     } catch (e) {
-      toast.error("Anons Silindi");
+      console.error(e);
     } finally {
+      toast.error("Announce Deleted");
       mutate();
       setLoading(false);
     }
@@ -23,7 +25,7 @@ export default function AnnounceItem({ data }) {
 
   return (
     <div
-      className="d-flex flex-row justify-content-between align-items-center fw-semibold fs-6 p-3 m-2"
+      className="d-flex flex-row justify-content-between align-items-center fw-semibold rounded-3 fs-6 p-3 m-2"
       style={{ background: "#526D82", color: "#fff" }}
     >
       <div className="w-50">{data.message}</div>
@@ -33,7 +35,7 @@ export default function AnnounceItem({ data }) {
         onClick={handleDelete}
         disabled={isLoading}
       >
-        {isLoading ? <Spinner /> : " Sil"}
+        {isLoading ? <Spinner /> : " Delete"}
       </button>
     </div>
   );

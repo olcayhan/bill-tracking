@@ -11,11 +11,7 @@ const BillFeed = ({ student }) => {
   }
 
   if (bills?.length === 0) {
-    return (
-      <p className="text-center text-light fs-5 fw-semibold">
-        Fatura Bulunmamaktadır
-      </p>
-    );
+    return <p className="text-center text-light fs-5 fw-semibold">No Bill</p>;
   }
   return (
     <>

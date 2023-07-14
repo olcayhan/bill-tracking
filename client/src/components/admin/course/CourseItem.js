@@ -27,15 +27,18 @@ const CourseItem = ({ course }) => {
   );
 
   return (
-    <div className="d-flex flex-row justify-content-between align-items-center bg-light p-3 m-2">
-      <div>{course.courseName}</div>
+    <div
+      className="d-flex flex-row justify-content-between align-items-center fw-semibold rounded-3 fs-6 p-3 m-2"
+      style={{ background: "#526D82", color: "#fff" }}
+    >
+      <div className="w-25">{course.courseName}</div>
       <div>{course.localDate}</div>
       <button
         className="btn btn-danger"
         onClick={() => handleDelete(course?._id)}
         disabled={isLoading}
       >
-        {isLoading ? <Spinner /> : "Sil"}
+        {isLoading ? <Spinner /> : "Delete"}
       </button>
     </div>
   );

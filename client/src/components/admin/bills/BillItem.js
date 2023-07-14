@@ -13,9 +13,7 @@ const BillItem = ({ item, mutate, Icon, color }) => {
       setLoading(true);
       try {
         await axios.put("https://bill-track.onrender.com/bill/toggle", item);
-        item.isPaid
-          ? toast.success("Fatura Ödemesi Geri Alındı")
-          : toast.success("Fatura Ödendi");
+        item.isPaid ? toast.success("Bill Unpaid") : toast.success("Bill Paid");
       } catch (e) {
         console.error(e);
       } finally {
@@ -28,7 +26,7 @@ const BillItem = ({ item, mutate, Icon, color }) => {
 
   return (
     <div
-      className="d-flex flex-row justify-content-between align-items-center rounded-2 m-2 p-3 gap-2"
+      className="d-flex flex-row justify-content-between align-items-center fw-semibold rounded-3 fs-6 p-3 m-2"
       style={
         item.isPaid
           ? { backgroundColor: "#C7E9B0", color: "#111" }
@@ -52,7 +50,7 @@ const BillItem = ({ item, mutate, Icon, color }) => {
         }
         disabled={Date.now() < Date.parse(item.date)}
       >
-        {isLoading ? <Spinner /> : item.isPaid ? "Ödenmiş" : "Öde"}
+        {isLoading ? <Spinner /> : item.isPaid ? "Paid" : "Pay"}
       </button>
     </div>
   );

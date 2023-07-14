@@ -6,7 +6,7 @@ export default function CoursesItem({ course, openModal }) {
       onClick={() => {
         openModal(course.courseName);
       }}
-      className="cardBackground col"
+      className="cardBackground"
     >
       <p>
         {course.courseName.charAt(0).toUpperCase() + course.courseName.slice(1)}

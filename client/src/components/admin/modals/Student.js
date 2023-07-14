@@ -5,7 +5,7 @@ export default function Student({ show, student, handleClose }) {
   return (
     <ModalContent
       bodyContent={<StudentFeed student={student} />}
-      title="Öğrenci Detayları"
+      title="Students Details"
       show={show}
       handleClose={handleClose}
     />

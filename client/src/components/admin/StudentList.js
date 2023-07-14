@@ -35,17 +35,19 @@ export default function StudentList() {
             className="border-0 bg-transparent text-light px-1 fw-semibold py-1 text-dark-300 w-100"
             style={{ outline: "none" }}
             type="text"
-            placeholder="Öğrenci ismini giriniz..."
+            placeholder="Write here ..."
           />
         </div>
         <div className="d-flex flex-row justify-content-center align-items-center gap-2">
           <input
-            className=""
             type="checkbox"
             id="flexCheckDefault"
             onChange={toggleFilter}
           />
-          <label className="fw-semibold fs-5 text-light" htmlFor="flexCheckDefault">
+          <label
+            className="btn fw-semibold fs-5 text-light"
+            htmlFor="flexCheckDefault"
+          >
             Unpaid
           </label>
         </div>

@@ -3,17 +3,18 @@ import React from "react";
 const StudentCourse = ({ newStudents }) => {
   if (newStudents.length === 0) {
     return (
-      <p className="text-center text-light fs-5 fw-semibold">
-        Öğrenci Bulunamadı
-      </p>
+      <p className="text-center text-light fs-5 fw-semibold">No Students</p>
     );
   }
 
   return (
     <>
-      {newStudents.map((student, key) => {
+      {newStudents.map((student) => {
         return (
-          <div className="d-flex flex-row align-items-center justify-content-between rounded bg-light m-2 p-2 ">
+          <div
+            key={student.id}
+            className="d-flex flex-row align-items-center justify-content-between rounded bg-light m-2 p-2 "
+          >
             <div>
               {student.name.charAt(0).toUpperCase() + student.name.slice(1)}
             </div>

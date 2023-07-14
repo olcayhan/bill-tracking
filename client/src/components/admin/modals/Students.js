@@ -10,7 +10,7 @@ export default function Students({
 }) {
   return (
     <ModalContent
-      title={`${classroomName} Kursu Öğrencileri`}
+      title={`${classroomName} Course Students`}
       bodyContent={<StudentCourse newStudents={newStudents} />}
       show={show}
       handleClose={handleClose}

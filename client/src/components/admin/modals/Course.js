@@ -22,7 +22,7 @@ export default function Course({ show, handleClose }) {
     } catch (e) {
       console.log(e);
     } finally {
-      toast.success("Kurs Eklendi");
+      toast.success("Course Created");
       setCourseName("");
       mutate();
       setLoading(false);
@@ -32,30 +32,30 @@ export default function Course({ show, handleClose }) {
   const bodyContent = (
     <>
       <input
-        className="w-100 h-auto m-1 p-3"
+        className="w-100 border broder-light rounded-3 m-1 p-3 bg-transparent text-light"
+        style={{ outline: "none" }}
         type="text"
-        placeholder="Kurs ismini bu kısıma yazınız ..."
+        placeholder="Write here ..."
         onChange={(e) => {
           setCourseName(e.target.value);
         }}
         value={courseName}
       />
       <button
-        className="btn btn-success ms-auto m-3 w-100"
+        className="border-0 p-2 rounded-2 ms-auto m-3 w-100"
+        style={{ background: "#526D82", color: "#fff" }}
         onClick={handleSubmit}
         disabled={isLoading}
       >
         {isLoading ? (
           <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-            <div>Ekleniyor</div>
+            <div>Creating</div>
             <Spinner />
           </div>
         ) : (
-          "Ekle"
+          "Create"
         )}
       </button>
-
-      <h1 className="text-center">Kurslar</h1>
       <hr />
       <CourseFeed />
     </>
@@ -63,7 +63,7 @@ export default function Course({ show, handleClose }) {
 
   return (
     <ModalContent
-      title="Kurs Ekle"
+      title="Create Course"
       bodyContent={bodyContent}
       show={show}
       handleClose={handleClose}

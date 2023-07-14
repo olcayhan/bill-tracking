@@ -23,7 +23,7 @@ export default function Annoucement({ show, handleClose }) {
     } catch (err) {
       console.log(err);
     } finally {
-      toast.success("Anons Eklendi");
+      if (message) toast.success("Anounnce added");
       setMessage("");
       mutate();
       setLoading(false);
@@ -36,7 +36,7 @@ export default function Annoucement({ show, handleClose }) {
         className="w-100 h-auto m-1 p-3 bg-transparent border border-light rounded-3 text-light"
         style={{ outline: "none" }}
         type="text"
-        placeholder="Duyurunuzu bu kısıma yazınız ..."
+        placeholder="Write here ..."
         value={message}
         onChange={(e) => {
           setMessage(e.target.value);
@@ -50,11 +50,11 @@ export default function Annoucement({ show, handleClose }) {
       >
         {isLoading ? (
           <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-            <div>Gönderiliyor</div>
+            <div>Sending</div>
             <Spinner />
           </div>
         ) : (
-          "Gönder"
+          "Send"
         )}
       </button>
       <hr />

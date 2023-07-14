@@ -12,7 +12,7 @@ const AnnounceFeed = () => {
   }
   if (announces?.length === 0) {
     return (
-      <p className="text-center text-light fs-5">Duyuru Bulunmamaktadır</p>
+      <p className="text-center text-light fs-5">No Announcement</p>
     );
   }
 

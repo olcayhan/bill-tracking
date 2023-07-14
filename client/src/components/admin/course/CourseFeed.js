@@ -11,7 +11,7 @@ const CourseFeed = () => {
   }
 
   if (courses?.length === 0) {
-    return <p className="text-center">Kurs Bulunmamaktadır</p>;
+    return <p className="text-center text-light">No Course</p>;
   }
   return (
     <div className="flex flex-col w-100">

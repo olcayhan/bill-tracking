@@ -4,7 +4,7 @@ import Spinner from "../../Spinner";
 
 export default function Table({ queryStudent }) {
   if (queryStudent?.length !== 0) {
-    <h3 className="text-center">Öğrenci Bulunamadı</h3>;
+    <h3 className="text-center">No Students</h3>;
   }
 
   if (!queryStudent) {

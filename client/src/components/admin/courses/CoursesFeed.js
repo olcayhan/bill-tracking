@@ -29,15 +29,13 @@ export default function CoursesFeed() {
   return (
     <>
       <div className="mt-5">
-        <div className="d-flex justify-content-center">
-          <h1 className="w-75" style={{ color: "#fff" }}>
-            Dersler
-          </h1>
+        <div className="d-flex flex-row justify-content-between">
+          <h1 className="text-light">Courses</h1>
           <button className="btn btn-dark" onClick={() => setIsCourse(true)}>
-            Ders Ekle
+            Create Course
           </button>
         </div>
-        <div className="row row-cols-3 justify-content-center">
+        <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
           {courses ? (
             courses.map((course, key) => {
               return (
@@ -45,7 +43,7 @@ export default function CoursesFeed() {
               );
             })
           ) : (
-            <h3 className="text-light text-center m-3">Ders Bulunmamaktadır</h3>
+            <h3 className="text-light text-center m-3">No Courses</h3>
           )}
         </div>
       </div>

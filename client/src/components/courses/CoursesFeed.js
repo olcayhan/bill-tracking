@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Students from "../modals/Students";
 import Course from "../modals/Course";
 import CoursesItem from "./CoursesItem";
-import { useCoursesContext } from "../../../contexts/CourseContext";
-import { useStudentsContext } from "../../../contexts/StudentContext";
+import { useCoursesContext } from "../../contexts/CourseContext";
+import { useStudentsContext } from "../../contexts/StudentContext";
 
 export default function CoursesFeed() {
   const [isStudents, setIsStudents] = useState();

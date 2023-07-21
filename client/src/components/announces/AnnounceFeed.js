@@ -1,7 +1,7 @@
 import React from "react";
 import AnnounceItem from "./AnnounceItem";
-import Spinner from "../../Spinner";
-import { useAnnounceContext } from "../../../contexts/AnnounceContext";
+import Spinner from "../Spinner";
+import { useAnnounceContext } from "../../contexts/AnnounceContext";
 
 const AnnounceFeed = () => {
   const { announces, isLoading } = useAnnounceContext();

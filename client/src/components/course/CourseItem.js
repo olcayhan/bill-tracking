@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useCoursesContext } from "../../../contexts/CourseContext";
+import { useCoursesContext } from "../../contexts/CourseContext";
 import { Spinner } from "react-bootstrap";
 
 const CourseItem = ({ course }) => {

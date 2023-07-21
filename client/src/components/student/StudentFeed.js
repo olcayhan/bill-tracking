@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
-import { useStudentsContext } from "../../../contexts/StudentContext";
+import { useStudentsContext } from "../../contexts/StudentContext";
 import { Spinner } from "react-bootstrap";
 const StudentFeed = ({ student }) => {
   const { mutate } = useStudentsContext();

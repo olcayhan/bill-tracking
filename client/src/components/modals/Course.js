@@ -1,70 +1,69 @@
 import React, { useCallback, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { useCoursesContext } from "../../contexts/CourseContext";
 import { toast } from "react-hot-toast";
-import { useAnnounceContext } from "../../../contexts/AnnounceContext";
 
 import axios from "axios";
-import AnnounceFeed from "../announces/AnnounceFeed";
-import ModalContent from "../../ModalContent";
+import CourseFeed from "../course/CourseFeed";
+import ModalContent from "../ModalContent";
 
-export default function Annoucement({ show, handleClose }) {
-  const [message, setMessage] = useState();
-  const { mutate } = useAnnounceContext();
+export default function Course({ show, handleClose }) {
+  const [courseName, setCourseName] = useState();
+  const { mutate } = useCoursesContext();
   const [isLoading, setLoading] = useState(false);
-
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://bill-track.onrender.com/announce/add", {
-        message: message,
+      await axios.post("https://bill-track.onrender.com/course/add", {
+        courseName: courseName,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),
       });
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     } finally {
-      if (message) toast.success("Anounnce added");
-      setMessage("");
+      toast.success("Course Created");
+      setCourseName("");
       mutate();
       setLoading(false);
     }
-  }, [message, mutate]);
+  }, [courseName, mutate]);
 
   const bodyContent = (
     <>
       <input
-        className="w-100 h-auto m-1 p-3 bg-transparent border border-light rounded-3 text-light"
+        className="w-100 border broder-light rounded-3 m-1 p-3 bg-transparent text-light"
         style={{ outline: "none" }}
         type="text"
         placeholder="Write here ..."
-        value={message}
         onChange={(e) => {
-          setMessage(e.target.value);
+          setCourseName(e.target.value);
         }}
+        value={courseName}
       />
       <button
-        className=" mx-auto m-3 w-100 border-0 p-2 rounded-2 fs-5 text-light"
-        style={{ backgroundColor: "#526D82" }}
+        className="border-0 p-2 rounded-2 ms-auto m-3 w-100"
+        style={{ background: "#526D82", color: "#fff" }}
         onClick={handleSubmit}
         disabled={isLoading}
       >
         {isLoading ? (
           <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-            <div>Sending</div>
+            <div>Creating</div>
             <Spinner />
           </div>
         ) : (
-          "Send"
+          "Create"
         )}
       </button>
       <hr />
-      <AnnounceFeed />
+      <CourseFeed />
     </>
   );
 
   return (
     <ModalContent
-      title="Announcement"
+      title="Create Course"
       bodyContent={bodyContent}
       show={show}
       handleClose={handleClose}

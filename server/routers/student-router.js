@@ -12,7 +12,6 @@ router.post("/add", async (req, res) => {
       surname: req.body.surname,
       phone: req.body.phone,
       email: req.body.email,
-      password: req.body.password,
       courses: req.body.courses,
     });
 

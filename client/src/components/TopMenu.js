@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Announcement from "./modals/Announcement";
 import AddStudent from "./modals/AddStudent";
-import { useAnnounceContext } from "../../contexts/AnnounceContext";
-import { useBillsContext } from "../../contexts/BillContext";
-import { useStudentsContext } from "../../contexts/StudentContext";
+import { useAnnounceContext } from "../contexts/AnnounceContext";
+import { useBillsContext } from "../contexts/BillContext";
+import { useStudentsContext } from "../contexts/StudentContext";
 import Card from "./Card";
 
 import { AiOutlineUserAdd } from "react-icons/ai";

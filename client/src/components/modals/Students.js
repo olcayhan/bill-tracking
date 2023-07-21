@@ -1,5 +1,5 @@
 import React from "react";
-import ModalContent from "../../ModalContent";
+import ModalContent from "../ModalContent";
 import StudentCourse from "../courses/StudentCourse";
 
 export default function Students({

@@ -13,7 +13,6 @@ const studentSchema = new Schema(
       trim: true,
       minlength: 2,
     },
-
     surname: {
       type: String,
       required: true,
@@ -26,10 +25,6 @@ const studentSchema = new Schema(
       required: true,
     },
     email: {
-      type: String,
-      required: true,
-    },
-    password: {
       type: String,
       required: true,
     },

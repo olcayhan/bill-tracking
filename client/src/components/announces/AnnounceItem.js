@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { useAnnounceContext } from "../../../contexts/AnnounceContext";
+import { useAnnounceContext } from "../../contexts/AnnounceContext";
 import { Spinner } from "react-bootstrap";
 
 export default function AnnounceItem({ data }) {

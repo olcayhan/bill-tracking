@@ -1,8 +1,8 @@
 import React from "react";
-import useBill from "../../../hooks/useBill";
+import useBill from "../../hooks/useBill";
 import BillItem from "./BillItem";
 import { RiErrorWarningLine } from "react-icons/ri";
-import Spinner from "../../Spinner";
+import Spinner from "../Spinner";
 const BillFeed = ({ student }) => {
   const { data: bills, isLoading, mutate } = useBill(student._id);
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { useCoursesContext } from "../../../contexts/CourseContext";
-import Spinner from "../../Spinner";
+import { useCoursesContext } from "../../contexts/CourseContext";
+import Spinner from "../Spinner";
 import CourseItem from "./CourseItem";
 
 const CourseFeed = () => {

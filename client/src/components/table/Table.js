@@ -1,6 +1,6 @@
 import React from "react";
 import TableItem from "./TableItem";
-import Spinner from "../../Spinner";
+import Spinner from "../Spinner";
 
 export default function Table({ queryStudent }) {
   if (queryStudent?.length !== 0) {

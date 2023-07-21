@@ -1,10 +1,10 @@
 import axios from "axios";
 
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { useStudentsContext } from "../../../contexts/StudentContext";
-import ModalContent from "../../ModalContent";
+import { useStudentsContext } from "../../contexts/StudentContext";
+import ModalContent from "../ModalContent";
 
 export default function AddStudent({ show, handleClose }) {
   const { mutate: mutateStudent } = useStudentsContext();

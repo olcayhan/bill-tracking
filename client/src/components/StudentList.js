@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useStudentsContext } from "../../contexts/StudentContext";
-import Spinner from "../Spinner";
+import { useStudentsContext } from "../contexts/StudentContext";
 import Table from "./table/Table";
 
 import { HiMagnifyingGlass } from "react-icons/hi2";

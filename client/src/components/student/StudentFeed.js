@@ -2,9 +2,12 @@ import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import { Spinner } from "react-bootstrap";
+import AddCourse from "../modals/AddCourse";
+
 const StudentFeed = ({ student }) => {
   const { mutate } = useStudentsContext();
   const [isLoading, setLoading] = useState(false);
+  const [isShow, setShow] = useState(false);
 
   const handleDelete = useCallback(async () => {
     try {
@@ -43,7 +46,15 @@ const StudentFeed = ({ student }) => {
           )}
         </div>
       </div>
-      <div className="row justify-content-end">
+      <div className="row justify-content-end gap-2">
+        <button
+          className="btn btn-success col-3"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          Add
+        </button>
         <button
           className="btn btn-danger col-3"
           disabled={isLoading}
@@ -52,6 +63,14 @@ const StudentFeed = ({ student }) => {
           {isLoading ? <Spinner /> : "Delete"}
         </button>
       </div>
+
+      <AddCourse
+        student={student}
+        show={isShow}
+        handleClose={() => {
+          setShow(false);
+        }}
+      />
     </>
   );
 };

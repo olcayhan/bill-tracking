@@ -35,7 +35,7 @@ router.post("/update", async (req, res) => {
     const { studentID, course } = req.body;
     const result = await Student.findByIdAndUpdate(
       { _id: studentID },
-      { $push: { courses: { course } } },
+      { $push: { courses: course } },
       { new: true }
     );
     return res.send({ result });

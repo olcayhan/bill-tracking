@@ -36,9 +36,9 @@ const StudentFeed = ({ student }) => {
           {student?.courses.length > 0 ? (
             student.courses.map((item) => {
               return (
-                <span key={item._id}>
+                <div className="ps-5" key={item._id}>
                   {item.class} - {item.localDate}
-                </span>
+                </div>
               );
             })
           ) : (

@@ -26,22 +26,22 @@ const BillItem = ({ item, mutate, Icon, color }) => {
 
   return (
     <div
-      className="d-flex flex-row justify-content-between align-items-center fw-semibold rounded-3 fs-6 p-3 m-2"
+      className="d-flex flex-row justify-content-between align-items-center fw-semibold rounded-3 fs-6 p-3 m-2 gap-3"
       style={
         item.isPaid
           ? { backgroundColor: "#C7E9B0", color: "#111" }
           : { backgroundColor: color, color: "#fff" }
       }
     >
-      <div>
-        {courseDate.toLocaleString("default", { month: "long" }) +
-          " " +
-          courseDate.getFullYear()}
+      <div className="d-flex flex-row justify-content-start gap-1 w-25">
+        <div>{courseDate.toLocaleString("default", { month: "long" })}</div>
+        <div>{courseDate.getFullYear()}</div>
+        <div>{Icon && <Icon style={{ color: "yellow" }} />}</div>
       </div>
-      {Icon && <Icon style={{ color: "yellow" }} />}
+
       <div>{item.class}</div>
       <button
-        className="btn ms-auto text-light"
+        className="btn text-light"
         onClick={() => handlePay(item)}
         style={
           item.isPaid

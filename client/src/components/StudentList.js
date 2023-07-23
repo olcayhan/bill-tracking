@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useStudentsContext } from "../contexts/StudentContext";
-import Table from "./table/Table";
-
 import { HiMagnifyingGlass } from "react-icons/hi2";
+
+import Table from "./table/Table";
 
 export default function StudentList() {
   const [queryStudent, setQueryStudent] = useState();
-
   const { students } = useStudentsContext();
 
   useEffect(() => {
@@ -19,8 +18,6 @@ export default function StudentList() {
     });
     setQueryStudent(newFiltered);
   };
-
-  const toggleFilter = useCallback((e) => {}, []);
 
   return (
     <div
@@ -35,20 +32,8 @@ export default function StudentList() {
             style={{ outline: "none" }}
             type="text"
             placeholder="Write here ..."
+            onChange={writeFilter}
           />
-        </div>
-        <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-          <input
-            type="checkbox"
-            id="flexCheckDefault"
-            onChange={toggleFilter}
-          />
-          <label
-            className="btn fw-semibold fs-5 text-light"
-            htmlFor="flexCheckDefault"
-          >
-            Unpaid
-          </label>
         </div>
       </div>
       <Table queryStudent={queryStudent} />

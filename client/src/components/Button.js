@@ -1,20 +1,33 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 
-const Button = ({ isLoading, handleSubmit, title, loadingTitle, danger }) => {
+const Button = ({
+  isLoading,
+  handleSubmit,
+  title,
+  loadingTitle,
+  primary,
+  danger,
+  full,
+  color,
+  disabled,
+}) => {
   return (
     <button
-      disabled={isLoading}
-      className="btn w-100 text-light p-2 rounded-2"
+      disabled={disabled ? disabled : isLoading}
+      className={`btn ${full && "w-100"} text-light border-0 p-2 rounded-2`}
       style={{
-        backgroundColor: danger ? "#B70404" : "#526D82",
-        border: "none",
+        backgroundColor: primary
+          ? "#526D82"
+          : danger
+          ? "#B70404"
+          : color && color,
       }}
       onClick={handleSubmit}
     >
       {isLoading ? (
         <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-          <div>{loadingTitle}</div>
+          {loadingTitle && <div>{loadingTitle}</div>}
           <Spinner />
         </div>
       ) : (

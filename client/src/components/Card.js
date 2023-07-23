@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Button";
 
 const Card = ({ title, length, color, callback, icon }) => {
   return (
@@ -10,12 +11,7 @@ const Card = ({ title, length, color, callback, icon }) => {
         <h3 className="fs-3 fw-bold">{title}</h3>
         <p className="fs-4 fw-semibold">{length}</p>
       </div>
-      <button
-        className="border-0 rounded-1 p-3 bg-transparent"
-        onClick={callback}
-      >
-        {icon}
-      </button>
+      <Button title={icon} handleSubmit={callback} />
     </div>
   );
 };

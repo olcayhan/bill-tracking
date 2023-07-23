@@ -4,6 +4,7 @@ import Course from "../modals/Course";
 import CoursesItem from "./CoursesItem";
 import { useCoursesContext } from "../../contexts/CourseContext";
 import { useStudentsContext } from "../../contexts/StudentContext";
+import Button from "../Button";
 
 export default function CoursesFeed() {
   const [isStudents, setIsStudents] = useState();
@@ -31,9 +32,11 @@ export default function CoursesFeed() {
       <div className="mt-5">
         <div className="d-flex flex-row justify-content-between">
           <h1 className="text-light">Courses</h1>
-          <button className="btn btn-dark" onClick={() => setIsCourse(true)}>
-            Create Course
-          </button>
+          <Button
+            title="Create Course"
+            handleSubmit={() => setIsCourse(true)}
+            primary
+          />
         </div>
         <div className="d-flex flex-row justify-content-center align-items-center flex-wrap">
           {courses ? (

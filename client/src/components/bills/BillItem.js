@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
+import Button from "../Button";
+
 import { toast } from "react-hot-toast";
-import { Spinner } from "react-bootstrap";
 
 const BillItem = ({ item, mutate, Icon, color }) => {
   const courseDate = new Date(item.date);
@@ -33,25 +34,22 @@ const BillItem = ({ item, mutate, Icon, color }) => {
           : { backgroundColor: color, color: "#fff" }
       }
     >
-      <div className="d-flex flex-row justify-content-start gap-1 w-25">
+      <div className="d-flex flex-row justify-content-start align-items-center gap-1 w-25">
         <div>{courseDate.toLocaleString("default", { month: "long" })}</div>
         <div>{courseDate.getFullYear()}</div>
-        <div>{Icon && <Icon style={{ color: "yellow" }} />}</div>
+        <div>
+          {Icon && !item.isPaid && (
+            <Icon style={{ color: "yellow" }} size={25} />
+          )}
+        </div>
       </div>
-
       <div>{item.class}</div>
-      <button
-        className="btn text-light"
-        onClick={() => handlePay(item)}
-        style={
-          item.isPaid
-            ? { backgroundColor: "#245953", border: "none" }
-            : { backgroundColor: "#D21312", border: "none" }
-        }
+      <Button
+        title={item.isPaid ? "Paid" : "Pay"}
+        handleSubmit={() => handlePay(item)}
+        color={item.isPaid ? "#245953" : "#D21312"}
         disabled={Date.now() < Date.parse(item.date)}
-      >
-        {isLoading ? <Spinner /> : item.isPaid ? "Paid" : "Pay"}
-      </button>
+      />
     </div>
   );
 };

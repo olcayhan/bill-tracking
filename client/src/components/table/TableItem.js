@@ -5,6 +5,7 @@ import Student from "../modals/Student";
 import { RiBillFill } from "react-icons/ri";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
+import Button from "../Button";
 
 export default function TableItem({ student, index }) {
   const [isShowBill, setIsShowBill] = useState();
@@ -17,30 +18,23 @@ export default function TableItem({ student, index }) {
         style={{ background: "#526D82" }}
       >
         <div className="d-flex flex-row justify-content-start align-items-center gap-5 fw-semibold fs-5 px-2">
-          <FaRegUserCircle size={35}/>
+          <FaRegUserCircle size={35} />
           <div>
             {student.name.charAt(0).toUpperCase() + student.name.slice(1)}
           </div>
           <div>{student.surname.toUpperCase()}</div>
         </div>
         <div className="d-flex flex-row justify-content-end align-items-center gap-3">
-          <button
-            className="border-0 bg-transparent"
-            onClick={() => {
-              setIsShowBill(true);
-            }}
-          >
-            <RiBillFill size={35} color="white" />
-          </button>
-
-          <button
-            className="border-0 bg-transparent"
-            onClick={() => {
-              setIsShowStudent(true);
-            }}
-          >
-            <AiFillInfoCircle size={35} color="white" />
-          </button>
+          <Button
+            color="transparent"
+            title={<RiBillFill size={35} color="white" />}
+            handleSubmit={() => setIsShowBill(true)}
+          />
+          <Button
+            color="transparent"
+            title={<AiFillInfoCircle size={35} color="white" />}
+            handleSubmit={() => setIsShowStudent(true)}
+          />
         </div>
       </div>
 

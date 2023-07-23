@@ -79,6 +79,8 @@ const AddCourse = ({ show, handleClose, student }) => {
         loadingTitle="Adding"
         isLoading={isLoading}
         handleSubmit={handleSubmit}
+        primary
+        full
       />
     </div>
   );

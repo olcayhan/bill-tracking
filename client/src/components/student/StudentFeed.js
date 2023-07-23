@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
-import { useStudentsContext } from "../../contexts/StudentContext";
-import { Spinner } from "react-bootstrap";
+import Button from "../Button";
 import AddCourse from "../modals/AddCourse";
+
+import { useStudentsContext } from "../../contexts/StudentContext";
 import { useBillsContext } from "../../contexts/BillContext";
 import { useCoursesContext } from "../../contexts/CourseContext";
+import { AiOutlineClose } from "react-icons/ai";
 
 const StudentFeed = ({ student, handleClose }) => {
   const { mutate: mutateStudent } = useStudentsContext();
@@ -53,22 +55,19 @@ const StudentFeed = ({ student, handleClose }) => {
           )}
         </div>
       </div>
-      <div className="row justify-content-end gap-2">
-        <button
-          className="btn btn-success col-3"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          Add
-        </button>
-        <button
-          className="btn btn-danger col-3"
-          disabled={isLoading}
-          onClick={handleDelete}
-        >
-          {isLoading ? <Spinner /> : "Delete"}
-        </button>
+      <div className="d-flex flex-row justify-content-end gap-2">
+        <Button
+          title="Add Course"
+          isLoading={isLoading}
+          handleSubmit={() => setShow(true)}
+          primary
+        />
+        <Button
+          title={<AiOutlineClose size={30} />}
+          isLoading={isLoading}
+          handleSubmit={handleDelete}
+          danger
+        />
       </div>
 
       <AddCourse

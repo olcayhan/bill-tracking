@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
+import Button from "../Button";
+
 import { toast } from "react-hot-toast";
 import { useCoursesContext } from "../../contexts/CourseContext";
 import { Spinner } from "react-bootstrap";
+import { AiOutlineClose } from "react-icons/ai";
 
 const CourseItem = ({ course }) => {
   const { mutate } = useCoursesContext();
@@ -33,13 +36,13 @@ const CourseItem = ({ course }) => {
     >
       <div className="w-25">{course.courseName}</div>
       <div>{course.localDate}</div>
-      <button
-        className="btn btn-danger"
-        onClick={() => handleDelete(course?._id)}
-        disabled={isLoading}
-      >
-        {isLoading ? <Spinner /> : "Delete"}
-      </button>
+
+      <Button
+        title={<AiOutlineClose size={30} />}
+        handleSubmit={() => handleDelete(course?._id)}
+        isLoading={isLoading}
+        danger
+      />
     </div>
   );
 };

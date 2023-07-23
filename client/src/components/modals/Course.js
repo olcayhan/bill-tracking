@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import CourseFeed from "../course/CourseFeed";
 import ModalContent from "../ModalContent";
+import Button from "../Button";
 
 export default function Course({ show, handleClose }) {
   const [courseName, setCourseName] = useState();
@@ -30,7 +31,7 @@ export default function Course({ show, handleClose }) {
   }, [courseName, mutate]);
 
   const bodyContent = (
-    <>
+    <div className="d-flex flex-column justify-content-center align-items-center gap-3">
       <input
         className="w-100 border broder-light rounded-3 m-1 p-3 bg-transparent text-light"
         style={{ outline: "none" }}
@@ -41,24 +42,17 @@ export default function Course({ show, handleClose }) {
         }}
         value={courseName}
       />
-      <button
-        className="border-0 p-2 rounded-2 ms-auto m-3 w-100"
-        style={{ background: "#526D82", color: "#fff" }}
-        onClick={handleSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-            <div>Creating</div>
-            <Spinner />
-          </div>
-        ) : (
-          "Create"
-        )}
-      </button>
-      <hr />
+
+      <Button
+        title="Create"
+        loadingTitle="Creating"
+        isLoading={isLoading}
+        handleSubmit={handleSubmit}
+        primary
+        full
+      />
       <CourseFeed />
-    </>
+    </div>
   );
 
   return (

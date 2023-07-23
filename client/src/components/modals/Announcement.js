@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useAnnounceContext } from "../../contexts/AnnounceContext";
 
 import axios from "axios";
 import AnnounceFeed from "../announces/AnnounceFeed";
 import ModalContent from "../ModalContent";
+import Button from "../Button";
 
 export default function Annoucement({ show, handleClose }) {
   const [message, setMessage] = useState();
@@ -31,7 +31,7 @@ export default function Annoucement({ show, handleClose }) {
   }, [message, mutate]);
 
   const bodyContent = (
-    <>
+    <div className="d-flex flex-column align-items-center justify-content-center gap-3">
       <input
         className="w-100 h-auto m-1 p-3 bg-transparent border border-light rounded-3 text-light"
         style={{ outline: "none" }}
@@ -42,24 +42,16 @@ export default function Annoucement({ show, handleClose }) {
           setMessage(e.target.value);
         }}
       />
-      <button
-        className=" mx-auto m-3 w-100 border-0 p-2 rounded-2 fs-5 text-light"
-        style={{ backgroundColor: "#526D82" }}
-        onClick={handleSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <div className="d-flex flex-row justify-content-center align-items-center gap-4">
-            <div>Sending</div>
-            <Spinner />
-          </div>
-        ) : (
-          "Send"
-        )}
-      </button>
-      <hr />
+      <Button
+        title="Send"
+        loadingTitle="Sending"
+        isLoading={isLoading}
+        handleSubmit={handleSubmit}
+        full
+        primary
+      />
       <AnnounceFeed />
-    </>
+    </div>
   );
 
   return (

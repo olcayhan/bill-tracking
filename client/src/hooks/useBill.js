@@ -10,9 +10,7 @@ const useBill = (id) => {
       setIsLoading(true);
 
       const response = id
-        ? await axios.get(
-            `https://bill-track.onrender.com/bill/get/${id}`
-          )
+        ? await axios.get(`https://bill-track.onrender.com/bill/get/${id}`)
         : null;
       setData(response.data.bills);
     } catch (err) {
@@ -24,7 +22,7 @@ const useBill = (id) => {
 
   useEffect(() => {
     mutate();
-  });
+  }, []);
 
   return { data, isLoading, mutate };
 };

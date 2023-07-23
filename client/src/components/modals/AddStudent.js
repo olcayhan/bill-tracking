@@ -1,11 +1,11 @@
 import axios from "axios";
+import ModalContent from "../ModalContent";
+import Button from "../Button";
 
 import React, { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useStudentsContext } from "../../contexts/StudentContext";
-import ModalContent from "../ModalContent";
-import Button from "../Button";
 
 export default function AddStudent({ show, handleClose }) {
   const { mutate: mutateStudent } = useStudentsContext();
@@ -87,8 +87,14 @@ export default function AddStudent({ show, handleClose }) {
         />
       </Form.Group>
 
-      <Form.Group className="d-flex justify-content-end">
-        <Button title="Create" loadingTitle="Creating" isLoading={isLoading} />
+      <Form.Group className="d-flex">
+        <Button
+          title="Create"
+          loadingTitle="Creating"
+          isLoading={isLoading}
+          full
+          primary
+        />
       </Form.Group>
     </Form>
   );

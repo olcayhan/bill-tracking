@@ -3,9 +3,13 @@ import React, { useCallback, useState } from "react";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import { Spinner } from "react-bootstrap";
 import AddCourse from "../modals/AddCourse";
+import { useBillsContext } from "../../contexts/BillContext";
+import { useCoursesContext } from "../../contexts/CourseContext";
 
-const StudentFeed = ({ student }) => {
-  const { mutate } = useStudentsContext();
+const StudentFeed = ({ student, handleClose }) => {
+  const { mutate: mutateStudent } = useStudentsContext();
+  const { mutate: mutateBills } = useBillsContext();
+  const { mutate: mutateCourse } = useCoursesContext();
   const [isLoading, setLoading] = useState(false);
   const [isShow, setShow] = useState(false);
 
@@ -18,10 +22,13 @@ const StudentFeed = ({ student }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      mutate();
+      mutateStudent();
+      mutateBills();
+      handleClose();
+      mutateCourse();
       setLoading(false);
     }
-  }, [student._id, mutate]);
+  }, [student._id, handleClose, mutateStudent, mutateBills, mutateCourse]);
 
   return (
     <>

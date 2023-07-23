@@ -24,7 +24,7 @@ const useBill = (id) => {
 
   useEffect(() => {
     mutate();
-  }, []);
+  });
 
   return { data, isLoading, mutate };
 };

@@ -1,11 +1,16 @@
 import React, { useCallback, useState } from "react";
 import ModalContent from "../ModalContent";
 import { useCoursesContext } from "../../contexts/CourseContext";
+import { useStudentsContext } from "../../contexts/StudentContext";
+import { useBillsContext } from "../../contexts/BillContext";
 import DatePickerForm from "../DatePickerForm";
 import axios from "axios";
+import Button from "../Button";
 
 const AddCourse = ({ show, handleClose, student }) => {
-  const { courses } = useCoursesContext();
+  const { courses, mutate: mutateCourse } = useCoursesContext();
+  const { mutate: mutateStudents } = useStudentsContext();
+  const { mutate: mutateBills } = useBillsContext();
   const [isLoading, setLoading] = useState(false);
   const [course, setCourse] = useState({
     studentID: student._id,
@@ -16,7 +21,6 @@ const AddCourse = ({ show, handleClose, student }) => {
     isPaid: false,
   });
 
-  console.log(course);
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
@@ -36,17 +40,19 @@ const AddCourse = ({ show, handleClose, student }) => {
       console.log(e);
     } finally {
       setLoading(false);
+      mutateCourse();
+      mutateStudents();
+      mutateBills();
       handleClose();
-      setCourse({
-        studentID: student._id,
-        courseID: courses[0]._id,
-        class: courses[0].courseName,
-        date: new Date(),
-        localDate: new Date().toLocaleDateString(),
-        isPaid: false,
-      });
     }
-  }, [course, student._id]);
+  }, [
+    course,
+    student._id,
+    handleClose,
+    mutateBills,
+    mutateCourse,
+    mutateStudents,
+  ]);
 
   const bodyContent = (
     <div className="d-flex flex-column justify-content-center align-items-center gap-3 p-3">
@@ -67,13 +73,13 @@ const AddCourse = ({ show, handleClose, student }) => {
         })}
       </select>
       <DatePickerForm course={course} setCourse={setCourse} />
-      <button
-        className="w-100 text-light p-2 rounded-2"
-        style={{ backgroundColor: "#526D82", border: "none" }}
-        onClick={handleSubmit}
-      >
-        Add
-      </button>
+
+      <Button
+        title="Add"
+        loadingTitle="Adding"
+        isLoading={isLoading}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 

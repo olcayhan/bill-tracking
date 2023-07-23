@@ -1,45 +1,42 @@
 import axios from "axios";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import ModalContent from "../ModalContent";
+import Button from "../Button";
 
 export default function AddStudent({ show, handleClose }) {
   const { mutate: mutateStudent } = useStudentsContext();
+  const [isLoading, setLoading] = useState(false);
 
   const [student, setStudent] = useState({
     date: new Date().toLocaleDateString(),
-    name: "",
-    surname: "",
-    phone: "",
-    email: "",
-    password: "",
     courses: [],
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await axios.post("https://bill-track.onrender.com/student/add", student);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setStudent({
-        date: new Date().toLocaleDateString(),
-        name: "",
-        surname: "",
-        phone: "",
-        email: "",
-        courses: [],
-      });
-      toast.success("Student Created");
-      mutateStudent();
-      handleClose();
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        setLoading(true);
+        await axios.post(
+          "https://bill-track.onrender.com/student/add",
+          student
+        );
+      } catch (e) {
+        console.log(e);
+      } finally {
+        toast.success("Student Created");
+        mutateStudent();
+        setLoading(false);
+        setStudent({});
+        handleClose();
+      }
+    },
+    [mutateStudent, student, handleClose]
+  );
 
   const bodyContent = (
     <Form
@@ -91,14 +88,7 @@ export default function AddStudent({ show, handleClose }) {
       </Form.Group>
 
       <Form.Group className="d-flex justify-content-end">
-        <button
-          disabled={student.name.length < 2 || student.surname.length < 1}
-          style={{ backgroundColor: "#526D82", border: "none" }}
-          type="submit"
-          className="btn p-3 text-light"
-        >
-          Create
-        </button>
+        <Button title="Create" loadingTitle="Creating" isLoading={isLoading} />
       </Form.Group>
     </Form>
   );

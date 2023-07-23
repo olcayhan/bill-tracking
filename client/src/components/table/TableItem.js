@@ -4,6 +4,7 @@ import Student from "../modals/Student";
 
 import { RiBillFill } from "react-icons/ri";
 import { AiFillInfoCircle } from "react-icons/ai";
+import { FaRegUserCircle } from "react-icons/fa";
 
 export default function TableItem({ student, index }) {
   const [isShowBill, setIsShowBill] = useState();
@@ -15,7 +16,8 @@ export default function TableItem({ student, index }) {
         className="d-flex flex-row justify-content-between align-items-center w-100 p-3 rounded-2 text-light"
         style={{ background: "#526D82" }}
       >
-        <div className="d-flex flex-row justify-content-start align-items-center gap-5 fw-semibold fs-5">
+        <div className="d-flex flex-row justify-content-start align-items-center gap-5 fw-semibold fs-5 px-2">
+          <FaRegUserCircle size={35}/>
           <div>
             {student.name.charAt(0).toUpperCase() + student.name.slice(1)}
           </div>

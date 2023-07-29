@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const useAnnounce = () => {
   const [data, setData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const mutate = async () => {
     try {

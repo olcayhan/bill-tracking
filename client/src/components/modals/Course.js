@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import { useCoursesContext } from "../../contexts/CourseContext";
 import { toast } from "react-hot-toast";
 
@@ -7,15 +6,18 @@ import axios from "axios";
 import CourseFeed from "../course/CourseFeed";
 import ModalContent from "../ModalContent";
 import Button from "../Button";
+import useUser from "../../hooks/useUser";
 
 export default function Course({ show, handleClose }) {
   const [courseName, setCourseName] = useState();
   const { mutate } = useCoursesContext();
   const [isLoading, setLoading] = useState(false);
+  const { data } = useUser();
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://bill-track.onrender.com/course/add", {
+      await axios.post("http://localhost:5000/course/add", {/* https://bill-track.onrender.com/course/add */
+        userId:data._id,
         courseName: courseName,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),

@@ -7,6 +7,7 @@ const Student = require("../models/student-model.js");
 router.post("/add", async (req, res) => {
   try {
     const newCourse = new Course({
+      userId: req.body.userId,
       courseName: req.body.courseName,
       date: req.body.date,
       localDate: req.body.localDate,

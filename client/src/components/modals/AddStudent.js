@@ -6,10 +6,12 @@ import React, { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useStudentsContext } from "../../contexts/StudentContext";
+import useUser from "../../hooks/useUser";
 
 export default function AddStudent({ show, handleClose }) {
   const { mutate: mutateStudent } = useStudentsContext();
   const [isLoading, setLoading] = useState(false);
+  const { data } = useUser();
 
   const [student, setStudent] = useState({
     date: new Date().toLocaleDateString(),
@@ -23,7 +25,7 @@ export default function AddStudent({ show, handleClose }) {
         setLoading(true);
         await axios.post(
           "https://bill-track.onrender.com/student/add",
-          student
+          { ...student, userId: data._id }
         );
       } catch (e) {
         console.error(e);

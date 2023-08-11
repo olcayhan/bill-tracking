@@ -6,6 +6,7 @@ const Bill = require("../models/bill-model.js");
 router.post("/add", async (req, res) => {
   try {
     const newStudent = new Student({
+      userId: req.body.userId,
       date: req.body.date,
       name: req.body.name,
       surname: req.body.surname,
@@ -22,9 +23,11 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/get", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
-    return res.send({ students: await Student.find() });
+    return res.send({
+      students: await Student.find({ userId: req.params.id }),
+    });
   } catch (e) {
     return res.send({ e: e, m: "error" });
   }

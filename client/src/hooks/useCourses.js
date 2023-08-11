@@ -9,7 +9,7 @@ const useCourses = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        "https://bill-track.onrender.com/course/get"
+        `https://bill-track.onrender.com/course/get/${localStorage.getItem('userID')}`
       );
       setData(response.data.courses);
     } catch (err) {

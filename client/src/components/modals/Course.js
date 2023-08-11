@@ -16,8 +16,8 @@ export default function Course({ show, handleClose }) {
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/course/add", {/* https://bill-track.onrender.com/course/add */
-        userId:data._id,
+      await axios.post("https://bill-track.onrender.com/course/add", {
+        userId: data._id,
         courseName: courseName,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),

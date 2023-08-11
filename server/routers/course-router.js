@@ -20,9 +20,9 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/get", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
-    return res.send({ courses: await Course.find().sort({ date: -1 }) });
+    return res.send({ courses: await Course.find({userId:req.params.id}).sort({ date: -1 }) });
   } catch (e) {
     return res.send({ e: e, m: "error" });
   }

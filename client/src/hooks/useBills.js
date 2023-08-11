@@ -13,7 +13,7 @@ const useBills = () => {
       );
       setData(response.data.bills);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

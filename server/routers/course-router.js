@@ -6,7 +6,6 @@ const Student = require("../models/student-model.js");
 
 router.post("/add", async (req, res) => {
   try {
-    console.log(req.body);
     const newCourse = new Course({
       courseName: req.body.courseName,
       date: req.body.date,
@@ -14,7 +13,6 @@ router.post("/add", async (req, res) => {
     });
 
     await newCourse.save();
-    console.log(req.body);
     return res.send({ message: "Kurs Eklendi", Course: newCourse });
   } catch (e) {
     return res.send({ e: e });
@@ -40,7 +38,6 @@ router.delete("/delete/:id", async (req, res) => {
       let updatedCourses = student?.courses.filter((item) => {
         return item.class !== course?.courseName;
       });
-      console.log(updatedCourses);
       await Student.findByIdAndUpdate(
         { _id: student.id },
         { $set: { courses: updatedCourses } }

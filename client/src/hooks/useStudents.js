@@ -13,7 +13,7 @@ const useStudents = () => {
       );
       setData(response.data.students);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

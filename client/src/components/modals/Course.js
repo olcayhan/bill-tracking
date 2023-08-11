@@ -21,7 +21,7 @@ export default function Course({ show, handleClose }) {
         date: Date.now(),
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       toast.success("Course Created");
       setCourseName("");

@@ -5,7 +5,6 @@ const Student = require("../models/student-model.js");
 
 router.put("/toggle", async (req, res) => {
   try {
-    console.log(req.body);
     const updatedBill = await Bill.findByIdAndUpdate(
       { _id: req.body._id },
       { $set: { isPaid: !req.body.isPaid } }
@@ -28,7 +27,6 @@ router.post("/add", async (req, res) => {
     });
 
     await newBill.save();
-    console.log(req.body);
     return res.send({ message: "Fatura Eklendi", Bill: newBill });
   } catch (e) {
     return res.send({ e: e });

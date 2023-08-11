@@ -26,7 +26,7 @@ export default function AddStudent({ show, handleClose }) {
           student
         );
       } catch (e) {
-        console.log(e);
+        console.error(e);
       } finally {
         toast.success("Student Created");
         mutateStudent();

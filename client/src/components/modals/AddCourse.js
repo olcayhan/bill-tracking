@@ -37,7 +37,7 @@ const AddCourse = ({ show, handleClose, student }) => {
         });
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       setLoading(false);
       mutateCourse();

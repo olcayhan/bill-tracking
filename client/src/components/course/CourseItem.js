@@ -19,7 +19,7 @@ const CourseItem = ({ course }) => {
           `https://bill-track.onrender.com/course/delete/${id}`
         );
       } catch (e) {
-        console.log(e);
+        console.error(e);
       } finally {
         toast.success("Kurs Silindi");
         mutate();

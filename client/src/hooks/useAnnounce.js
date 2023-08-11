@@ -9,11 +9,11 @@ const useAnnounce = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        "https://bill-track.onrender.com/announce/get"
+        `https://bill-track.onrender.com/announce/get/${localStorage.getItem("userID")}`
       );
       setData(response.data.announce);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

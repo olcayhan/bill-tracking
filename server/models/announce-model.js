@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const announceSchema = new Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     message: {
       type: String,
       required: true,

@@ -14,7 +14,7 @@ const useBill = (id) => {
         : null;
       setData(response.data.bills);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

@@ -18,7 +18,6 @@ const useUser = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(response, "response");
       setData(response.data);
     } catch (err) {
       setError(err);

@@ -25,7 +25,6 @@ const Register = () => {
       .post("https://bill-track.onrender.com/users/register", { name, email, password })
       .then((response) => {
         navigate("/auth");
-        console.log("Registration successful:", response.data.message);
       })
       .catch((error) => {
         console.error("Registration failed:", error.response.data.message);

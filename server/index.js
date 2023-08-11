@@ -29,6 +29,6 @@ app.listen(5000, () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then(() => console.log("connected to db"))
+    .then(() => {})
     .catch((err) => {});
 });

@@ -6,22 +6,25 @@ import axios from "axios";
 import AnnounceFeed from "../announces/AnnounceFeed";
 import ModalContent from "../ModalContent";
 import Button from "../Button";
+import useUser from "../../hooks/useUser";
 
 export default function Annoucement({ show, handleClose }) {
   const [message, setMessage] = useState();
   const { mutate } = useAnnounceContext();
   const [isLoading, setLoading] = useState(false);
+  const { data } = useUser();
 
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
       await axios.post("https://bill-track.onrender.com/announce/add", {
+        userId: data._id,
         message: message,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       if (message) toast.success("Anounnce added");
       setMessage("");

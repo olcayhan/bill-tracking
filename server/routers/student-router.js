@@ -4,7 +4,6 @@ const Student = require("../models/student-model.js");
 const Bill = require("../models/bill-model.js");
 
 router.post("/add", async (req, res) => {
-  console.log(req.body);
   try {
     const newStudent = new Student({
       date: req.body.date,
@@ -46,7 +45,6 @@ router.post("/update", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
   try {
-    console.log(req.body);
     const result = await Student.findByIdAndDelete({ _id: req.body._id });
     const bills = await Bill.deleteMany({ studentID: req.body._id });
     return res.send({ result, bills });

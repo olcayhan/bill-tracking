@@ -5,7 +5,6 @@ import { useAnnounceContext } from "../../contexts/AnnounceContext";
 
 const AnnounceFeed = () => {
   const { announces, isLoading } = useAnnounceContext();
-  console.log(announces);
 
   if (isLoading) {
     return <Spinner />;

@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const billSchema = new Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     studentID: {
       type: String,
       required: true,

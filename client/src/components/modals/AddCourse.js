@@ -6,12 +6,14 @@ import { useBillsContext } from "../../contexts/BillContext";
 import DatePickerForm from "../DatePickerForm";
 import axios from "axios";
 import Button from "../Button";
+import useUser from "../../hooks/useUser";
 
 const AddCourse = ({ show, handleClose, student }) => {
   const { courses, mutate: mutateCourse } = useCoursesContext();
   const { mutate: mutateStudents } = useStudentsContext();
   const { mutate: mutateBills } = useBillsContext();
   const [isLoading, setLoading] = useState(false);
+  const { data } = useUser();
   const [course, setCourse] = useState({
     studentID: student._id,
     courseID: courses[0]._id,
@@ -32,6 +34,7 @@ const AddCourse = ({ show, handleClose, student }) => {
       for (let i = 0; i < 12; i++) {
         await axios.post("https://bill-track.onrender.com/bill/add", {
           ...course,
+          userId: data._id,
           date: course.date.setMonth(course.date.getMonth() + 1),
           localDate: course.date.toLocaleDateString(),
         });

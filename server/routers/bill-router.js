@@ -18,6 +18,7 @@ router.put("/toggle", async (req, res) => {
 router.post("/add", async (req, res) => {
   try {
     const newBill = new Bill({
+      userId: req.body.userId,
       studentID: req.body.studentID,
       courseID: req.body.courseID,
       date: req.body.date,
@@ -33,9 +34,9 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/get", async (req, res) => {
+router.get("/pull/:id", async (req, res) => {
   try {
-    let bills = await Bill.find();
+    let bills = await Bill.find({ userId: req.params.id });
     bills = bills.filter((bill) => Date.parse(bill.date) <= Date.now());
     return res.send({ bills });
   } catch (err) {

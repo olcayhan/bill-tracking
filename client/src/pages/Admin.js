@@ -22,6 +22,12 @@ export default function Admin() {
 
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userID");
+    navigate("/auth");
+  };
+
   useEffect(() => {
     if (!isLoadingUser && user === undefined) navigate("/auth");
   }, [navigate, isLoadingUser, user]);
@@ -35,15 +41,7 @@ export default function Admin() {
         <BillProvider>
           <AnnounceProvider>
             <div className="container mt-5">
-              <button
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("userID");
-                  navigate("/auth");
-                }}
-              >
-                Logout
-              </button>
+              <button onClick={handleLogout}>Logout</button>
               <TopMenu students={students} bills={bills} />
               <StudentList />
               <AdminClasses />

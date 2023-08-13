@@ -4,10 +4,11 @@ import { Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import config from "../env/config";
 
 const Register = () => {
   const { data: user, isLoading } = useUser();
-  
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -18,17 +19,19 @@ const Register = () => {
     if (!isLoading && user !== undefined) navigate("/");
   }, [navigate, user, isLoading]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    axios
-      .post("https://bill-track.onrender.com/users/register", { name, email, password })
-      .then((response) => {
-        navigate("/auth");
-      })
-      .catch((error) => {
-        console.error("Registration failed:", error.response.data.message);
+    try {
+      const registerURL = new URL("/users/register", config.API_URL);
+      await axios.post(registerURL, {
+        name,
+        email,
+        password,
       });
+      navigate("/auth");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

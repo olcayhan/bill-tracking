@@ -3,12 +3,13 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button } from "react-bootstrap";
 import useUser from "../hooks/useUser";
+import config from "../env/config";
 
 const Login = () => {
   const { data: user, isLoading } = useUser();
   const navigate = useNavigate();
 
-   useEffect(() => {
+  useEffect(() => {
     if (!isLoading && user !== undefined) navigate("/");
   }, [navigate, user, isLoading]);
 
@@ -19,7 +20,8 @@ const Login = () => {
     async (e) => {
       e.preventDefault();
       try {
-        const login = await axios.post("https://bill-track.onrender.com/users/login", {
+        const loginUrl = new URL("/users/login", config.API_URL);
+        const login = await axios.post(loginUrl, {
           email,
           password,
         });
@@ -27,10 +29,10 @@ const Login = () => {
         localStorage.setItem("userID", login.data.user._id);
         navigate("/");
       } catch (error) {
-        console.error(error.response.data.message);
+        console.error(error);
       }
     },
-    [email, password]
+    [email, password, navigate]
   );
 
   return (

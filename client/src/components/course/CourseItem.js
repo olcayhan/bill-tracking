@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 import Button from "../Button";
+import config from "../../env/config";
 
 import { toast } from "react-hot-toast";
 import { useCoursesContext } from "../../contexts/CourseContext";
-import { Spinner } from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
 
 const CourseItem = ({ course }) => {
@@ -15,14 +15,13 @@ const CourseItem = ({ course }) => {
     async (id) => {
       try {
         setIsLoading(true);
-        await axios.delete(
-          `https://bill-track.onrender.com/course/delete/${id}`
-        );
+        const courseURL = new URL("/course/delete/" + id, config.API_URL);
+        await axios.delete(courseURL);
+        mutate();
+        toast.success("Kurs Silindi");
       } catch (e) {
         console.error(e);
       } finally {
-        toast.success("Kurs Silindi");
-        mutate();
         setIsLoading(false);
       }
     },

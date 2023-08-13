@@ -12,8 +12,8 @@ export default function Table({ queryStudent }) {
   }
   return (
     <div className="d-flex flex-column justify-content-center align-items-center gap-2 w-100">
-      {queryStudent?.map((student, index) => (
-        <TableItem student={student} key={index} index={index} />
+      {queryStudent?.map((student, key) => (
+        <TableItem student={student} key={key} />
       ))}
     </div>
   );

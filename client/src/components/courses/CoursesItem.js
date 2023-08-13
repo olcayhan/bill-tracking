@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function CoursesItem({ course, openModal }) {
+export default function CoursesItem({ course, openStudentsModal }) {
   return (
     <button
       onClick={() => {
-        openModal(course.courseName);
+        openStudentsModal(course.courseName);
       }}
       className="cardBackground"
     >

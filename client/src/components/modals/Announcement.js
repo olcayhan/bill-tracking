@@ -7,18 +7,19 @@ import AnnounceFeed from "../announces/AnnounceFeed";
 import ModalContent from "../ModalContent";
 import Button from "../Button";
 import useUser from "../../hooks/useUser";
+import config from "../../env/config";
 
 export default function Annoucement({ show, handleClose }) {
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const { mutate } = useAnnounceContext();
   const [isLoading, setLoading] = useState(false);
-  const { data } = useUser();
+  const { data: user } = useUser();
 
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://bill-track.onrender.com/announce/add", {
-        userId: data._id,
+      await axios.post(config.API_URL + "/announce/add", {
+        userId: user?._id,
         message: message,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),
@@ -31,7 +32,7 @@ export default function Annoucement({ show, handleClose }) {
       mutate();
       setLoading(false);
     }
-  }, [message, mutate]);
+  }, [message, mutate, user?._id]);
 
   const bodyContent = (
     <div className="d-flex flex-column align-items-center justify-content-center gap-3">

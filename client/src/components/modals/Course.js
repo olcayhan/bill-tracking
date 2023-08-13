@@ -7,30 +7,35 @@ import CourseFeed from "../course/CourseFeed";
 import ModalContent from "../ModalContent";
 import Button from "../Button";
 import useUser from "../../hooks/useUser";
+import config from "../../env/config";
 
 export default function Course({ show, handleClose }) {
-  const [courseName, setCourseName] = useState();
   const { mutate } = useCoursesContext();
+
+  const [courseName, setCourseName] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const { data } = useUser();
+
+  const { data: user } = useUser();
+
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://bill-track.onrender.com/course/add", {
-        userId: data._id,
+      await axios.post(config.API_URL + "/course/add", {
+        userId: user?._id,
         courseName: courseName,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),
       });
+      toast.success("Course Created");
+      mutate();
     } catch (e) {
       console.error(e);
+      toast.error("Something went wrong");
     } finally {
-      toast.success("Course Created");
       setCourseName("");
-      mutate();
       setLoading(false);
     }
-  }, [courseName, mutate]);
+  }, [courseName, mutate, user?._id]);
 
   const bodyContent = (
     <div className="d-flex flex-column justify-content-center align-items-center gap-3">

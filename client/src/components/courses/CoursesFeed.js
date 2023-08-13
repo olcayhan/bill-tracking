@@ -7,26 +7,25 @@ import { useStudentsContext } from "../../contexts/StudentContext";
 import Button from "../Button";
 
 export default function CoursesFeed() {
-  const [isStudents, setIsStudents] = useState();
-  const [isCourse, setIsCourse] = useState();
+  const [isStudentsModalOpen, setIsStudentsModalOpen] = useState(false);
+  const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
   const [newStudents, setNewStudents] = useState([]);
   const [classroomName, setClassroomName] = useState("");
 
   const { courses } = useCoursesContext();
   const { students } = useStudentsContext();
 
-  function getStudents(name) {
+  function getStudentsForCourse(name) {
     return students.filter((student) =>
       student.courses.some((course) => course.class === name)
     );
   }
 
-  const openModal = (name) => {
-    setIsStudents(true);
-    setNewStudents(getStudents(name));
+  const openStudentsModal = (name) => {
+    setIsStudentsModalOpen(true);
+    setNewStudents(getStudentsForCourse(name));
     setClassroomName(name);
   };
-
   return (
     <>
       <div className="mt-5">
@@ -34,7 +33,7 @@ export default function CoursesFeed() {
           <h1 className="text-light">Courses</h1>
           <Button
             title="Create Course"
-            handleSubmit={() => setIsCourse(true)}
+            handleSubmit={() => setIsCourseModalOpen(true)}
             primary
           />
         </div>
@@ -42,7 +41,11 @@ export default function CoursesFeed() {
           {courses ? (
             courses.map((course, key) => {
               return (
-                <CoursesItem key={key} course={course} openModal={openModal} />
+                <CoursesItem
+                  key={key}
+                  course={course}
+                  openStudentsModal={openStudentsModal}
+                />
               );
             })
           ) : (
@@ -52,13 +55,16 @@ export default function CoursesFeed() {
       </div>
 
       <Students
-        show={isStudents}
+        show={isStudentsModalOpen}
         newStudents={newStudents}
-        handleClose={() => setIsStudents(false)}
+        handleClose={() => setIsStudentsModalOpen(false)}
         classroomName={classroomName}
       />
 
-      <Course show={isCourse} handleClose={() => setIsCourse(false)} />
+      <Course
+        show={isCourseModalOpen}
+        handleClose={() => setIsCourseModalOpen(false)}
+      />
     </>
   );
 }

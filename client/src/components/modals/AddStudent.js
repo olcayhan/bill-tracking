@@ -7,11 +7,12 @@ import { Form } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import useUser from "../../hooks/useUser";
+import config from "../../env/config";
 
 export default function AddStudent({ show, handleClose }) {
   const { mutate: mutateStudent } = useStudentsContext();
   const [isLoading, setLoading] = useState(false);
-  const { data } = useUser();
+  const { data: user } = useUser();
 
   const [student, setStudent] = useState({
     date: new Date().toLocaleDateString(),
@@ -23,21 +24,28 @@ export default function AddStudent({ show, handleClose }) {
       e.preventDefault();
       try {
         setLoading(true);
-        await axios.post(
-          "https://bill-track.onrender.com/student/add",
-          { ...student, userId: data._id }
-        );
+        await axios.post(config.API_URL + "/student/add", {
+          ...student,
+          userId: user?._id,
+        });
       } catch (e) {
         console.error(e);
+        toast.error("Failed to create student");
       } finally {
+        setLoading(false);
+        setStudent({
+          name: "",
+          surname: "",
+          phone: "",
+          email: "",
+          courses: [],
+        });
         toast.success("Student Created");
         mutateStudent();
-        setLoading(false);
-        setStudent({});
         handleClose();
       }
     },
-    [mutateStudent, student, handleClose]
+    [mutateStudent, user?._id, student, handleClose]
   );
 
   const bodyContent = (

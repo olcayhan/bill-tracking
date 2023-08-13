@@ -3,10 +3,12 @@ import React, { useCallback, useState } from "react";
 import Button from "../Button";
 import AddCourse from "../modals/AddCourse";
 
+import { toast } from "react-hot-toast";
 import { useStudentsContext } from "../../contexts/StudentContext";
 import { useBillsContext } from "../../contexts/BillContext";
 import { useCoursesContext } from "../../contexts/CourseContext";
 import { AiOutlineClose } from "react-icons/ai";
+import config from "../../env/config";
 
 const StudentFeed = ({ student, handleClose }) => {
   const { mutate: mutateStudent } = useStudentsContext();
@@ -18,16 +20,18 @@ const StudentFeed = ({ student, handleClose }) => {
   const handleDelete = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://bill-track.onrender.com/student/delete", {
+      await axios.post(config.API_URL + "/student/delete", {
         _id: student._id,
       });
+      toast.success("Student deleted");
     } catch (err) {
       console.error(err);
+      toast.error("Something went wrong");
     } finally {
       mutateStudent();
       mutateBills();
-      handleClose();
       mutateCourse();
+      handleClose();
       setLoading(false);
     }
   }, [student._id, handleClose, mutateStudent, mutateBills, mutateCourse]);

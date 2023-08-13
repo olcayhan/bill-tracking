@@ -7,9 +7,9 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import Button from "../Button";
 
-export default function TableItem({ student, index }) {
-  const [isShowBill, setIsShowBill] = useState();
-  const [isShowStdudent, setIsShowStudent] = useState();
+export default function TableItem({ student }) {
+  const [isShowBill, setIsShowBill] = useState(false);
+  const [isShowStdudent, setIsShowStudent] = useState(false);
 
   return (
     <>

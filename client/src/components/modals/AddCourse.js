@@ -7,34 +7,40 @@ import DatePickerForm from "../DatePickerForm";
 import axios from "axios";
 import Button from "../Button";
 import useUser from "../../hooks/useUser";
+import config from "../../env/config";
 
 const AddCourse = ({ show, handleClose, student }) => {
   const { courses, mutate: mutateCourse } = useCoursesContext();
   const { mutate: mutateStudents } = useStudentsContext();
   const { mutate: mutateBills } = useBillsContext();
+
   const [isLoading, setLoading] = useState(false);
-  const { data } = useUser();
+  const { data: user } = useUser();
+
   const [course, setCourse] = useState({
-    studentID: student._id,
-    courseID: courses[0]._id,
-    class: courses[0].courseName,
+    studentID: student?._id,
+    courseID: courses[0]?._id,
+    class: courses[0]?.courseName,
     date: new Date(),
     localDate: new Date().toLocaleDateString(),
     isPaid: false,
   });
 
-  const handleSubmit = useCallback(async () => {
+  const handleAddCourseSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("https://bill-track.onrender.com/student/update", {
-        studentID: student._id,
+      const courseURL = new URL("/student/update", config.API_URL);
+      await axios.post(courseURL, {
+        studentID: student?._id,
         course: course,
       });
 
       for (let i = 0; i < 12; i++) {
-        await axios.post("https://bill-track.onrender.com/bill/add", {
+        const billURL = new URL("/bill/add", config.API_URL);
+
+        await axios.post(billURL, {
           ...course,
-          userId: data._id,
+          userId: user?._id,
           date: course.date.setMonth(course.date.getMonth() + 1),
           localDate: course.date.toLocaleDateString(),
         });
@@ -50,7 +56,8 @@ const AddCourse = ({ show, handleClose, student }) => {
     }
   }, [
     course,
-    student._id,
+    student?._id,
+    user?._id,
     handleClose,
     mutateBills,
     mutateCourse,
@@ -64,7 +71,7 @@ const AddCourse = ({ show, handleClose, student }) => {
           setCourse({
             ...course,
             class: e.target.value,
-            courseID: courses[e.target.selectedIndex]._id,
+            courseID: courses[e.target.selectedIndex]?._id,
           })
         }
         className="w-100 bg-transparent border-1 border- p-2 text-light"
@@ -81,7 +88,7 @@ const AddCourse = ({ show, handleClose, student }) => {
         title="Add"
         loadingTitle="Adding"
         isLoading={isLoading}
-        handleSubmit={handleSubmit}
+        handleSubmit={handleAddCourseSubmit}
         primary
         full
       />

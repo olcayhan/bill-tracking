@@ -2,8 +2,10 @@ import React from "react";
 import useBill from "../../hooks/useBill";
 import BillItem from "./BillItem";
 import Spinner from "../Spinner";
-
 import { RiErrorWarningLine } from "react-icons/ri";
+
+const WARNING_COLOR = "#E74646";
+const UPCOMING_COLOR = "#e78c46";
 
 const BillFeed = ({ student }) => {
   const { data: bills, isLoading, mutate } = useBill(student._id);
@@ -12,45 +14,45 @@ const BillFeed = ({ student }) => {
     return <Spinner />;
   }
 
-  if (bills?.length === 0) {
+  if (!bills || bills.length === 0) {
     return <p className="text-center text-light fs-5 fw-semibold">No Bill</p>;
   }
+
+  const billData = bills.sort((a, b) => new Date(a.date) - new Date(b.date));
+
   return (
     <>
-      {bills
-        ?.sort((a, b) => new Date(a.date) - new Date(b.date))
-        .map((item) => {
-          const courseDate = new Date(item.date);
-          const currentDate = new Date();
+      {billData.map((item) => {
+        const courseDate = new Date(item.date);
+        const currentDate = new Date();
+        const monthsDifference =
+          (courseDate.getFullYear() - currentDate.getFullYear()) * 12 +
+          courseDate.getMonth() -
+          currentDate.getMonth();
 
-          if (courseDate < currentDate) {
-            return (
-              <BillItem
-                key={item._id}
-                item={item}
-                mutate={mutate}
-                Icon={RiErrorWarningLine}
-                color={"#E74646"}
-              />
-            );
-          } else if (
-            (courseDate.getFullYear() === currentDate.getFullYear() &&
-              courseDate.getMonth() - 2 <= currentDate.getMonth()) ||
-            (courseDate.getFullYear() > currentDate.getFullYear() &&
-              courseDate.getMonth() + 10 <= currentDate.getMonth())
-          ) {
-            return (
-              <BillItem
-                key={item._id}
-                item={item}
-                mutate={mutate}
-                color={"#e78c46"}
-              />
-            );
-          } else {
-            return <></>;
-          }
-        })}
+        if (courseDate < currentDate) {
+          return (
+            <BillItem
+              key={item._id}
+              item={item}
+              mutate={mutate}
+              Icon={RiErrorWarningLine}
+              color={WARNING_COLOR}
+            />
+          );
+        } else if (monthsDifference <= -2 || monthsDifference >= 10) {
+          return (
+            <BillItem
+              key={item._id}
+              item={item}
+              mutate={mutate}
+              color={UPCOMING_COLOR}
+            />
+          );
+        } else {
+          return null;
+        }
+      })}
     </>
   );
 };

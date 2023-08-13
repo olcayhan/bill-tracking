@@ -4,6 +4,8 @@ import axios from "axios";
 import { useAnnounceContext } from "../../contexts/AnnounceContext";
 import Button from "../Button";
 import { AiOutlineClose } from "react-icons/ai";
+import config from "../../env/config";
+
 export default function AnnounceItem({ data }) {
   const { mutate } = useAnnounceContext();
   const [isLoading, setLoading] = useState(false);
@@ -11,17 +13,16 @@ export default function AnnounceItem({ data }) {
   const handleDelete = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `https://bill-track.onrender.com/announce/delete/${data._id}`
-      );
+      await axios.delete(config.API_URL + "/announce/delete/" + data._id);
+      mutate();
+      toast.error("Announce Deleted");
     } catch (e) {
       console.error(e);
+      toast.error("Error deleting announcement");
     } finally {
-      toast.error("Announce Deleted");
-      mutate();
       setLoading(false);
     }
-  }, [data?._id, mutate]);
+  }, [data._id, mutate]);
 
   return (
     <div

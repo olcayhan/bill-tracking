@@ -14,7 +14,7 @@ const Button = ({
 }) => {
   return (
     <button
-      disabled={disabled ? disabled : isLoading}
+      disabled={disabled || isLoading}
       className={`btn ${full && "w-100"} text-light border-0 p-2 rounded-2`}
       style={{
         backgroundColor: primary

@@ -5,14 +5,14 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import Table from "./table/Table";
 
 export default function StudentList() {
-  const [queryStudent, setQueryStudent] = useState();
   const { students } = useStudentsContext();
+  const [queryStudent, setQueryStudent] = useState(students);
 
   useEffect(() => {
     setQueryStudent(students);
   }, [students]);
 
-  const writeFilter = (e) => {
+  const handleFilterChange = (e) => {
     let newFiltered = students.filter((student) => {
       return student.name.toLowerCase().includes(e.target.value.toLowerCase());
     });
@@ -32,7 +32,7 @@ export default function StudentList() {
             style={{ outline: "none" }}
             type="text"
             placeholder="Write here ..."
-            onChange={writeFilter}
+            onChange={handleFilterChange}
           />
         </div>
       </div>

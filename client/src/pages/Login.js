@@ -1,25 +1,28 @@
 import axios from "axios";
 import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import useUser from "../hooks/useUser";
 import config from "../env/config";
-
+import { toast } from "react-hot-toast";
+import Button from "../components/Button";
 const Login = () => {
-  const { data: user, isLoading } = useUser();
+  const { data: user, isLoading: isLoadingUser } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoading && user !== undefined) navigate("/");
-  }, [navigate, user, isLoading]);
+    if (!isLoadingUser && user !== undefined) navigate("/");
+  }, [navigate, user, isLoadingUser]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
       try {
+        setIsLoading(true);
         const loginUrl = new URL("/users/login", config.API_URL);
         const login = await axios.post(loginUrl, {
           email,
@@ -28,8 +31,12 @@ const Login = () => {
         localStorage.setItem("token", login.data.token);
         localStorage.setItem("userID", login.data.user._id);
         navigate("/");
+        toast.success("Login Success");
       } catch (error) {
         console.error(error);
+        toast.error(error.response.data.message);
+      } finally {
+        setIsLoading(false);
       }
     },
     [email, password, navigate]
@@ -72,9 +79,7 @@ const Login = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        <Button title="Submit" isLoading={isLoading} primary />
 
         <a href="/register" className="text-light">
           Register Here

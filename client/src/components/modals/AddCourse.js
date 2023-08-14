@@ -8,6 +8,7 @@ import axios from "axios";
 import Button from "../Button";
 import useUser from "../../hooks/useUser";
 import config from "../../env/config";
+import { toast } from "react-hot-toast";
 
 const AddCourse = ({ show, handleClose, student }) => {
   const { courses, mutate: mutateCourse } = useCoursesContext();
@@ -30,28 +31,34 @@ const AddCourse = ({ show, handleClose, student }) => {
     try {
       setLoading(true);
       const courseURL = new URL("/student/update", config.API_URL);
-      await axios.post(courseURL, {
+      const courseData = {
         studentID: student?._id,
         course: course,
-      });
+      };
+
+      await axios.post(courseURL, courseData);
 
       for (let i = 0; i < 12; i++) {
         const billURL = new URL("/bill/add", config.API_URL);
-
-        await axios.post(billURL, {
+        const billData = {
           ...course,
           userId: user?._id,
           date: course.date.setMonth(course.date.getMonth() + 1),
           localDate: course.date.toLocaleDateString(),
-        });
+        };
+
+        await axios.post(billURL, billData);
       }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
+
       mutateCourse();
       mutateStudents();
       mutateBills();
+      toast.success("Bills Added Successfully");
+    } catch (e) {
+      console.error(e);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
       handleClose();
     }
   }, [

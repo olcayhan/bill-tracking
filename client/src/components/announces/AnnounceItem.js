@@ -13,12 +13,16 @@ export default function AnnounceItem({ data }) {
   const handleDelete = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.delete(config.API_URL + "/announce/delete/" + data._id);
+      const announceURL = new URL(
+        "/announce/delete/" + data._id,
+        config.API_URL
+      );
+      await axios.delete(announceURL);
       mutate();
       toast.error("Announce Deleted");
     } catch (e) {
       console.error(e);
-      toast.error("Error deleting announcement");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

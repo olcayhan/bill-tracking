@@ -20,12 +20,15 @@ export default function Course({ show, handleClose }) {
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post(config.API_URL + "/course/add", {
+      const courseURL = new URL("/course/add", config.API_URL);
+      const courseData = {
         userId: user?._id,
         courseName: courseName,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),
-      });
+      };
+      
+      await axios.post(courseURL, courseData);
       toast.success("Course Created");
       mutate();
     } catch (e) {

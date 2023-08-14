@@ -13,6 +13,7 @@ import { BillProvider } from "../contexts/BillContext";
 import { AnnounceProvider } from "../contexts/AnnounceContext";
 import { useNavigate } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import Button from "../components/Button";
 
 export default function Admin() {
   const { data: user, isLoading: isLoadingUser } = useUser();
@@ -41,7 +42,7 @@ export default function Admin() {
         <BillProvider>
           <AnnounceProvider>
             <div className="container mt-5">
-              <button onClick={handleLogout}>Logout</button>
+              <Button handleSubmit={handleLogout} title="Logout" danger />
               <TopMenu students={students} bills={bills} />
               <StudentList />
               <AdminClasses />

@@ -24,13 +24,17 @@ export default function AddStudent({ show, handleClose }) {
       e.preventDefault();
       try {
         setLoading(true);
-        await axios.post(config.API_URL + "/student/add", {
+        const studentURL = new URL("/student/add", config.API_URL);
+        const studentData = {
           ...student,
           userId: user?._id,
-        });
+        };
+        
+        await axios.post(studentURL, studentData);
+        toast.success("Student Created");
       } catch (e) {
         console.error(e);
-        toast.error("Failed to create student");
+        toast.error("Something went wrong");
       } finally {
         setLoading(false);
         setStudent({
@@ -40,7 +44,6 @@ export default function AddStudent({ show, handleClose }) {
           email: "",
           courses: [],
         });
-        toast.success("Student Created");
         mutateStudent();
         handleClose();
       }

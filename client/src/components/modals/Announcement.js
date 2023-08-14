@@ -18,18 +18,21 @@ export default function Annoucement({ show, handleClose }) {
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post(config.API_URL + "/announce/add", {
+      const announceURL = new URL("/announce/add", config.API_URL);
+      const announceData = {
         userId: user?._id,
         message: message,
         localDate: new Date().toLocaleDateString(),
         date: Date.now(),
-      });
+      };
+      await axios.post(announceURL, announceData);
+      toast.success("Anounnce added");
+      mutate();
     } catch (err) {
       console.error(err);
+      toast.error("Something went wrong");
     } finally {
-      if (message) toast.success("Anounnce added");
       setMessage("");
-      mutate();
       setLoading(false);
     }
   }, [message, mutate, user?._id]);
@@ -49,6 +52,7 @@ export default function Annoucement({ show, handleClose }) {
       <Button
         title="Send"
         loadingTitle="Sending"
+        disabled={message.length < 5}
         isLoading={isLoading}
         handleSubmit={handleSubmit}
         full

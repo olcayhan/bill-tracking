@@ -20,17 +20,18 @@ const StudentFeed = ({ student, handleClose }) => {
   const handleDelete = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post(config.API_URL + "/student/delete", {
+      const studentURL = new URL("/student/delete", config.API_URL);
+      await axios.post(studentURL, {
         _id: student._id,
       });
       toast.success("Student deleted");
+      mutateStudent();
+      mutateBills();
+      mutateCourse();
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
     } finally {
-      mutateStudent();
-      mutateBills();
-      mutateCourse();
       handleClose();
       setLoading(false);
     }

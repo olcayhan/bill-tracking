@@ -20,6 +20,7 @@ const CourseItem = ({ course }) => {
         mutate();
         toast.success("Kurs Silindi");
       } catch (e) {
+        toast.error("Something went wrong");
         console.error(e);
       } finally {
         setIsLoading(false);

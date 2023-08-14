@@ -1,36 +1,44 @@
 // src/RegisterPage.js
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useUser from "../hooks/useUser";
 import config from "../env/config";
+import { toast } from "react-hot-toast";
+import Button from "../components/Button";
 
 const Register = () => {
-  const { data: user, isLoading } = useUser();
+  const { data: user, isLoading: isLoadingUser } = useUser();
 
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && user !== undefined) navigate("/");
-  }, [navigate, user, isLoading]);
+    if (!isLoadingUser && user !== undefined) navigate("/");
+  }, [navigate, user, isLoadingUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const registerURL = new URL("/users/register", config.API_URL);
       await axios.post(registerURL, {
         name,
         email,
         password,
       });
+      toast.success("Registered successfully");
       navigate("/auth");
     } catch (e) {
       console.error(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -81,9 +89,7 @@ const Register = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Register
-        </Button>
+        <Button title="Register" isLoading={isLoading} primary />
 
         <a href="/auth" className="text-light">
           Login Here

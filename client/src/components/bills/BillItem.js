@@ -12,7 +12,8 @@ const BillItem = ({ item, mutate, Icon, color }) => {
   const handlePay = useCallback(async () => {
     setLoading(true);
     try {
-      await axios.put(config.API_URL + "/bill/toggle", item);
+      const billURL = new URL("/bill/toggle", config.API_URL);
+      await axios.put(billURL, item);
       const successMessage = item.isPaid ? "Bill Unpaid" : "Bill Paid";
       toast.success(successMessage);
       mutate();

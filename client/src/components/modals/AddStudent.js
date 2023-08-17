@@ -29,7 +29,7 @@ export default function AddStudent({ show, handleClose }) {
           ...student,
           userId: user?._id,
         };
-        
+
         await axios.post(studentURL, studentData);
         toast.success("Student Created");
       } catch (e) {
@@ -38,6 +38,7 @@ export default function AddStudent({ show, handleClose }) {
       } finally {
         setLoading(false);
         setStudent({
+          date: new Date().toLocaleDateString(),
           name: "",
           surname: "",
           phone: "",
